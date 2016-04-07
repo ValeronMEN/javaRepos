@@ -7,13 +7,12 @@ public class BucketSort {
 		this.arr = arr;
 	}
 	
-	public void PrintArray(){
+	public void printArray(){
 		int i;
 		for(i=0; i<arr.length; i++){
 			if (arr[i].roomNumber < 0){
-				System.out.println("Error. Negative value of room!");
-				//System.err.println("Error. Negative value of room!");
-				return;
+				System.err.println("Index '"+i+"' of array has negative value of room!");
+				System.exit(1);
 			}
 		}
 		for(i=0; i<arr.length; i++){
@@ -21,7 +20,7 @@ public class BucketSort {
 		}
 	}
 	
-	public void Sorting(){
+	public void sorting(){
 		if (arr.length == 0){
 			return;
 		}
@@ -32,7 +31,7 @@ public class BucketSort {
 				maxRoom = arr[i].roomNumber;
 			}
 			if(arr[i].roomNumber<0){
-				return;
+				System.exit(1);
 			}
 		}
 		//int nBuckets = maxRoom + 1;

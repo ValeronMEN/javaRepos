@@ -1,26 +1,26 @@
 package lab2part1;
 
 public class ShakerSort{
-	public Student [] arr;
+	private Student [] arr;
 
 	public ShakerSort(Student[] arr) {
 		this.arr = arr;
 	}
 	
-	public void PrintArray(){
+	public void printArray(){
 		int i;
 		for(i=0; i<arr.length; i++){
 			if (arr[i].roomNumber < 0){
-				System.out.println("Error. Negative value of room!");
-				return;
+				System.err.println("Index '"+i+"' of array has negative value of room!");
+				System.exit(1);
 			}
 		}
 		for(i=0; i<arr.length; i++){
-			System.out.print(" "+(i+1)+". "+arr[i].roomNumber+" r. "+arr[i].surname+" "+arr[i].name+"\n");
+			System.out.print(" "+(i+1)+". "+this.arr[i].roomNumber+" r. "+this.arr[i].surname+" "+this.arr[i].name+"\n");
 		}
 	}
 	
-	public void OneBubble(int from, int to){
+	private void oneBubble(int from, int to){
 		int i;
 		Student temp = new Student("", "", 0);
 		if (from==to){
@@ -46,22 +46,22 @@ public class ShakerSort{
 		}
 	}
 	
-	public void ShakeArray(){
+	public void shakeArray(){
 		int from = 0;
 		int to = this.arr.length-1;
 		
-		for(int i=0; i<arr.length; i++){
-			if (arr[i].roomNumber < 0){
-				return;
+		for(int i=0; i<this.arr.length; i++){
+			if (this.arr[i].roomNumber < 0){
+				System.exit(1);
 			}
 		}
 		
 		while(true){
 			if(from>to) break;
-			OneBubble(from, to);
+			oneBubble(from, to);
 			to--;
 			if(from>to) break;
-			OneBubble(to, from);
+			oneBubble(to, from);
 			from++;
 		}
 	}
