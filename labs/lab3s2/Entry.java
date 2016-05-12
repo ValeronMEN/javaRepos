@@ -21,4 +21,8 @@ public class Entry {
 	public Rectangle getValue(){
 		return value;
 	}
+	
+	public void setValue(Rectangle v){
+		this.value =  v;
+	}
 }

@@ -3,8 +3,8 @@ package lab3s2;
 public class Hashtable {
 	private MyList [] table;
 	private int size = 0;
-	private final int defaultSize = 19;
-	private final double A = Math.sqrt(5) - 2;
+	private final int defaultSize = 5;
+	private final double A = (Math.sqrt(5) - 1)/2;
 	private int m = defaultSize;
 	
 	public Hashtable(){
@@ -73,20 +73,21 @@ public class Hashtable {
 			for(i=0; i<table[hashKey].getSize(); i++){
 				if (table[hashKey].getFromIndex(i).getKey()==key){
 					Rectangle toReturn = table[hashKey].getFromIndex(i).getValue();
-					table[hashKey].deleteIndex(i);
-					Entry newEntry = new Entry(value);
-					table[hashKey].addIndex(newEntry, i);
+					//table[hashKey].deleteIndex(i);
+					//Entry newEntry = new Entry(value);
+					//table[hashKey].addIndex(newEntry, i);
+					table[hashKey].getFromIndex(i).setValue(value);
 					return toReturn;
 				}
 			}
 			Entry newEntry = new Entry(value);
-			table[hashKey].addLast(newEntry);
+			table[hashKey].addFirst(newEntry);
 			this.size++;
 			return null;
 		}
 		table[hashKey] = new MyList();
 		Entry newEntry = new Entry(value);
-		table[hashKey].addLast(newEntry);
+		table[hashKey].addFirst(newEntry);
 		this.size++;
 		return null;
 
@@ -112,15 +113,22 @@ public class Hashtable {
 	}
 	
 	public void output(){
-		System.out.println("Size of non-void elements is "+this.size);
-		int i, j, z=1;
+		System.out.println("Size of non-void elements is "+this.size+"\n"
+				+ "Size of hashtable is "+this.m);
+		int i, j;
 		for (i=0; i<this.m; i++){
 			if (table[i]!=null){
+				System.out.printf(i+". ");
 				for (j=0; j<table[i].getSize(); j++){
-					System.out.println(z+". Area: "+table[i].getFromIndex(j).getValue().calculateArea()+"; HashKey: "+i+";");
+					if (j!=0){
+						System.out.printf("   ");
+					}
+					System.out.println("Key: "+table[i].getFromIndex(j).getValue().calculateArea()+";");
 					table[i].getFromIndex(j).getValue().view();
-					z++;
 				}
+			}
+			else{
+				System.out.println(i+". Empty;");
 			}
 		}
 	}

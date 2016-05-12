@@ -3,8 +3,8 @@ package lab3s2;
 public class HashtableOpen {
 	private Entry [] table;
 	private int size = 0;
-	private final int defaultSize = 19;
-	private final double A = Math.sqrt(5) - 2;
+	private final int defaultSize = 5;
+	private final double A = (Math.sqrt(5) - 1)/2;
 	private int m = defaultSize;
 	
 	public HashtableOpen(){
@@ -28,21 +28,18 @@ public class HashtableOpen {
 	}
 	
 	public boolean contains(int key){
-		int i;
-		for(i=0; i<m; i++){
-			if(table[i]!=null && table[i].getKey()==key){
-				return true;
-			}
+		int hashKey = hash(key);
+		if(table[hashKey]!=null && table[hashKey].getKey()==key){
+			return true;
 		}
+		
 		return false;
 	}
 	
 	public Rectangle get(int key){;
-		int i;
-		for (i=0; i<m; i++){
-			if (table[i]!= null && table[i].getKey()==key){
-				return table[i].getValue();
-			}
+		int hashKey = hash(key);
+		if (table[hashKey]!= null && table[hashKey].getKey()==key){
+			return table[hashKey].getValue();
 		}
 		return null;
 	}
@@ -63,13 +60,10 @@ public class HashtableOpen {
 			System.exit(1);
 		}
 		int hashKey = hash(key);
-		int i;
-		for(i=0; i<m; i++){
-			if (table[i]!=null && table[i].getKey()==key){
-				Rectangle toReturn = table[i].getValue();
-				table[i] = new Entry(value);
-				return toReturn;
-			}
+		if (table[hashKey]!=null){
+			Rectangle toReturn = table[hashKey].getValue();
+			table[hashKey] = new Entry(value);
+			return toReturn;
 		}
 		table[hashKey] = new Entry(value);
 		this.size++;
@@ -91,13 +85,16 @@ public class HashtableOpen {
 	}
 	
 	public void output(){
-		System.out.println("Size of non-void elements is "+this.size);
-		int i, j=1;
+		System.out.println("Size of non-void elements is "+this.size+"\n"
+				+ "Size of hashtable is "+this.m);
+		int i;
 		for(i=0; i<this.m; i++){
 			if (table[i] != null){
-				System.out.println(j+". Area: "+table[i].getValue().calculateArea() + "; HashKey: "+i+";");
+				System.out.println(i+". Key: "+table[i].getValue().calculateArea() + ";");
 				table[i].getValue().view();
-				j++;
+			}
+			else{
+				System.out.println(i+". Empty;");
 			}
 		}
 	}
