@@ -9,19 +9,11 @@ public class Hashtable {
 	
 	public Hashtable(){
 		this.table = new MyList[this.defaultSize];
-		int i;
-		for(i=0; i<defaultSize; i++){
-			table[i] = new MyList();
-		}
 	}
 	
 	public Hashtable(int userSize){
 		this.table = new MyList [userSize];
 		this.m = userSize;
-		int i;
-		for(i=0; i<userSize; i++){
-			table[i] = new MyList();
-		}
 	}
 	
 	public boolean isEmpty(){
@@ -37,9 +29,11 @@ public class Hashtable {
 	
 	public boolean contains(int key){
 		int i, hashKey = hash(key);
-		for(i=0; i<table[hashKey].getSize(); i++){
-			if(table[hashKey].getFromIndex(i).getKey()==key){
-				return true;
+		if (table[hashKey]!=null){
+			for(i=0; i<table[hashKey].getSize(); i++){
+				if(table[hashKey].getFromIndex(i).getKey()==key){
+					return true;
+				}
 			}
 		}
 		return false;
@@ -47,10 +41,12 @@ public class Hashtable {
 	
 	public Rectangle get(int key){
 		int hashKey = hash(key);
-		int i;
-		for (i=0; i<table[hashKey].getSize(); i++){
-			if (table[hashKey].getFromIndex(i).getKey()==key){
-				return table[hashKey].getFromIndex(i).getValue();
+		if (table[hashKey]!=null){
+			int i;
+			for (i=0; i<table[hashKey].getSize(); i++){
+				if (table[hashKey].getFromIndex(i).getKey()==key){
+					return table[hashKey].getFromIndex(i).getValue();
+				}
 			}
 		}
 		return null;
@@ -72,14 +68,23 @@ public class Hashtable {
 			System.exit(1);
 		}
 		int hashKey = hash(key);
-		int i;
-		for(i=0; i<table[hashKey].getSize(); i++){
-			if (table[hashKey].getFromIndex(i).getKey()==key){
-				Rectangle toReturn = table[hashKey].getFromIndex(i).getValue();
-				table[hashKey].getFromIndex(i).setValue(value);
-				return toReturn;
+		if (table[hashKey]!=null){
+			int i;
+			for(i=0; i<table[hashKey].getSize(); i++){
+				if (table[hashKey].getFromIndex(i).getKey()==key){
+					Rectangle toReturn = table[hashKey].getFromIndex(i).getValue();
+					table[hashKey].deleteIndex(i);
+					Entry newEntry = new Entry(value);
+					table[hashKey].addIndex(newEntry, i);
+					return toReturn;
+				}
 			}
+			Entry newEntry = new Entry(value);
+			table[hashKey].addLast(newEntry);
+			this.size++;
+			return null;
 		}
+		table[hashKey] = new MyList();
 		Entry newEntry = new Entry(value);
 		table[hashKey].addLast(newEntry);
 		this.size++;
@@ -90,13 +95,17 @@ public class Hashtable {
 	public Rectangle remove(int key) {
 		int hashKey = hash(key);
 		int i;
-		for(i=0; i<table[hashKey].getSize(); i++){
-			if (table[hashKey].getFromIndex(i).getKey()==key){
-				Rectangle toDelete = new Rectangle(0, 0, 0, 0);
-				toDelete = table[hashKey].getFromIndex(i).getValue();
-				table[hashKey].deleteIndex(i);
-				this.size--;
-				return toDelete;
+		if (table[hashKey]!=null){
+			for(i=0; i<table[hashKey].getSize(); i++){
+				if (table[hashKey].getFromIndex(i).getKey()==key){
+					Rectangle toDelete = table[hashKey].getFromIndex(i).getValue();
+					table[hashKey].deleteIndex(i);
+					this.size--;
+					if (table[hashKey].isEmpty()==true){
+						table[hashKey] = null;
+					}
+					return toDelete;
+				}
 			}
 		}
 		return null;
@@ -106,10 +115,12 @@ public class Hashtable {
 		System.out.println("Size of non-void elements is "+this.size);
 		int i, j, z=1;
 		for (i=0; i<this.m; i++){
-			for (j=0; j<table[i].getSize(); j++){
-				System.out.println(z+". Area: "+table[i].getFromIndex(j).getValue().calculateArea()+"; HashKey: "+i+";");
-				table[i].getFromIndex(j).getValue().view();
-				z++;
+			if (table[i]!=null){
+				for (j=0; j<table[i].getSize(); j++){
+					System.out.println(z+". Area: "+table[i].getFromIndex(j).getValue().calculateArea()+"; HashKey: "+i+";");
+					table[i].getFromIndex(j).getValue().view();
+					z++;
+				}
 			}
 		}
 	}

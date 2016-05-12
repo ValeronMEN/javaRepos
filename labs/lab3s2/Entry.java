@@ -21,12 +21,4 @@ public class Entry {
 	public Rectangle getValue(){
 		return value;
 	}
-	
-	public void setValue(Rectangle rec){
-		this.value = rec;
-	}
-	
-	public void setKey(int k){
-		this.key = k;
-	}
 }

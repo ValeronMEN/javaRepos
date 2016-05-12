@@ -9,20 +9,11 @@ public class HashtableOpen {
 	
 	public HashtableOpen(){
 		this.table = new Entry[this.defaultSize];
-		
-		int i;
-		for(i=0; i<defaultSize; i++){
-			table[i] = new Entry();
-		}
 	}
 	
 	public HashtableOpen(int userSize){
 		this.table = new Entry [userSize];
 		this.m = userSize;
-		int i;
-		for(i=0; i<userSize; i++){
-			table[i] = new Entry();
-		}
 	}
 	
 	public boolean isEmpty(){
@@ -39,7 +30,7 @@ public class HashtableOpen {
 	public boolean contains(int key){
 		int i;
 		for(i=0; i<m; i++){
-			if(table[i].getKey()==key){
+			if(table[i]!=null && table[i].getKey()==key){
 				return true;
 			}
 		}
@@ -49,7 +40,7 @@ public class HashtableOpen {
 	public Rectangle get(int key){;
 		int i;
 		for (i=0; i<m; i++){
-			if (table[i].getKey()==key){
+			if (table[i]!= null && table[i].getKey()==key){
 				return table[i].getValue();
 			}
 		}
@@ -74,14 +65,13 @@ public class HashtableOpen {
 		int hashKey = hash(key);
 		int i;
 		for(i=0; i<m; i++){
-			if (table[i].getKey()==key){
+			if (table[i]!=null && table[i].getKey()==key){
 				Rectangle toReturn = table[i].getValue();
-				table[i].setValue(value);
+				table[i] = new Entry(value);
 				return toReturn;
 			}
 		}
-		Entry newEntry = new Entry(value);
-		table[hashKey] = newEntry;
+		table[hashKey] = new Entry(value);
 		this.size++;
 		return null;
 
@@ -90,10 +80,9 @@ public class HashtableOpen {
 	public Rectangle remove(int key){
 		int i;
 		for(i=0; i<m; i++){
-			if (table[i].getKey()==key){
-				Rectangle toDelete = new Rectangle(0, 0, 0, 0);
-				toDelete = table[i].getValue();
-				table[i].setKey(-1);
+			if (table[i] != null && table[i].getKey()==key){
+				Rectangle toDelete = table[i].getValue();
+				table[i] = null;
 				this.size--;
 				return toDelete;
 			}
@@ -105,7 +94,7 @@ public class HashtableOpen {
 		System.out.println("Size of non-void elements is "+this.size);
 		int i, j=1;
 		for(i=0; i<this.m; i++){
-			if (table[i].getKey() != (-1)){
+			if (table[i] != null){
 				System.out.println(j+". Area: "+table[i].getValue().calculateArea() + "; HashKey: "+i+";");
 				table[i].getValue().view();
 				j++;

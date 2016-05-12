@@ -47,7 +47,7 @@ public class Main {
 		Rectangle myrec1 = new Rectangle(17, 8, 8, 9);
 		Rectangle myrec2 = new Rectangle(86, 5, 73, 1);
 		Rectangle myrec3 = new Rectangle(44, 8, 10, 9);
-		Rectangle myrec4 = new Rectangle(44, 8, 9, 8);
+		Rectangle myrec4 = new Rectangle(16, 11, 9, 8);
 		
 		//Hashtable hsop = new Hashtable(41);
 		Hashtable hsop = new Hashtable();
@@ -76,6 +76,7 @@ public class Main {
 		}
 		
 		hsop.remove(mykey1);
+		hsop.remove(myrec2.calculateArea());
 		hsop.output();
 	}
 
