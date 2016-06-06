@@ -58,7 +58,6 @@ public class MyTree {
 		else{
 			y.right = z;
 		}
-
 		
 		return null;
 	}
@@ -75,52 +74,13 @@ public class MyTree {
 	}
 
 	public Student remove(int id){
-		TreeNode current = root.treeSearch(id, root);
-		if(current == null){
-			return null;
-		}
-		Student toReturn = current.st;
-		if (current.left == null && current.right == null){
-			if (current.parent.id < id){
-				current.parent.right = null;
-			}
-			else{
-				current.parent.left = null;
-			}
-			return toReturn;
-		}
-		if (current.left == null){
-			if (current.parent.id < id){
-				current.parent.right = current.right;
-				current.right.parent = current.parent;
-			}
-			else{
-				current.parent.left = current.right;
-				current.right.parent = current.parent;
-			}
-			return toReturn;
-		}
-		if (current.right == null){
-			if (current.parent.id < id){
-				current.parent.right = current.left;
-				current.left.parent = current.parent;
-			}
-			else{
-				current.parent.left = current.left;
-				current.left.parent = current.parent;
-			}
-			return toReturn;
-		} else {
-		/*if (current.left != null && current.right != null){*/
-			return root.treeDelete(current, this.root).st;
-		}
+		TreeNode current = root.treeSearch(id, root); // if-else operations was removed in this method
+		return remove(current);
 	}
 
-	/*
-	private void remove(TreeNode toDel){
-		remove(toDel.id);
+	private Student remove(TreeNode toDel){
+		return root.treeDelete(toDel, this.root).st; // id remove is not using in this method
 	}
-	*/
 
 	public int remove(int course, int todayYear) {
 		if (root==null){
@@ -131,12 +91,11 @@ public class MyTree {
 		MyList list = new MyList();
 		root.treeRemoveCriteria(list, course, todayYear, root);
 		for (int i=0; i<list.getSize(); i++){
-			remove(list.getFromIndex(i).id);
+			remove(list.getFromIndex(i)); // id is absent
 		}
 		if (size-list.getSize() != root.getSize()){
 			System.out.println("Fail!");
 		}
 		return list.getSize();
 	}
-
 }

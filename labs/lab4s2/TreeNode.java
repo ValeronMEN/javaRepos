@@ -96,12 +96,13 @@ public class TreeNode {
 		}
 		else {
 			y = treeSuccessor(z);
-			if (y.left != null){
-				x = y.left;
-			}
-			else {
-				x = y.right;
-			}
+		}
+		
+		if (y.left != null){
+			x = y.left;
+		}
+		else {
+			x = y.right;
 		}
 		
 		if (x!=null){
