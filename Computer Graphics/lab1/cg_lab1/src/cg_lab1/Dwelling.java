@@ -40,10 +40,8 @@ public class Dwelling extends Application {
 			windows[i] = createSquare(0, 0, 75);
 			windows[i].setFill(Color.YELLOW);
 		}
-		windows[0].setX(200);
-		windows[0].setY(320);
-		windows[1].setX(525);
-		windows[1].setY(320);
+		setRectangleCoords(windows[0], 200, 320);
+		setRectangleCoords(windows[1], 525, 320);
 		for(int i=0; i<amountOfWindows; i++){
 			root.getChildren().add(windows[i]);
 		}
@@ -58,14 +56,10 @@ public class Dwelling extends Application {
 			stars[i] = createSquare(0, 0, 25);
 			stars[i].setFill(Color.WHITE);
 		}
-		stars[0].setX(100);
-		stars[0].setY(100);
-		stars[1].setX(200);
-		stars[1].setY(60);
-		stars[2].setX(500);
-		stars[2].setY(50);
-		stars[3].setX(730);
-		stars[3].setY(230);
+		setRectangleCoords(stars[0], 100, 100);
+		setRectangleCoords(stars[1], 200, 60);
+		setRectangleCoords(stars[2], 500, 50);
+		setRectangleCoords(stars[3], 730, 230);
 		for(int i=0; i<amountOfStars; i++){
 			root.getChildren().add(stars[i]);
 		}
@@ -84,5 +78,10 @@ public class Dwelling extends Application {
 	
 	private Rectangle createSquare(double x, double y, double length){
 		return new Rectangle(x, y, length, length);
+	}
+	
+	private void setRectangleCoords(Rectangle rec, double x, double y){
+		rec.setX(x);
+		rec.setY(y);
 	}
 }
