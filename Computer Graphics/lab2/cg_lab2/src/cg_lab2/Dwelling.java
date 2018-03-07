@@ -3,7 +3,6 @@ package cg_lab2;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 
 import javax.swing.JFrame;
@@ -16,16 +15,16 @@ public class Dwelling extends JPanel implements ActionListener {
 	private static int maxHeight;
 	
 	double points[][] = {
-			{ -96, -25 }, { 96, -25 }, { 0, -65 },
+			{ -96, -25 }, { 96, -25 }, { 0, -80 },
 			};
 	
 	Timer timer;
 	
-	// Для анімації масштабування
+	// for scale animation
 	private double scale = 1;
 	private double deltaScale = 0.04;
 	
-	// Для анімації руху
+	// for movement animation
 	private double tx = 1;
 	private double ty = 0;
 	private double deltaX = 1;
@@ -33,7 +32,6 @@ public class Dwelling extends JPanel implements ActionListener {
 	private int radiusExtention = 110;
 	
 	public Dwelling() {
-		// Таймер генеруватиме подію що 10 мс
 		timer = new Timer(10, this);
 		timer.start();
 	}
@@ -47,7 +45,7 @@ public class Dwelling extends JPanel implements ActionListener {
 				RenderingHints.VALUE_RENDER_QUALITY);
 				g2d.setRenderingHints(rh);
 		
-		g2d.setBackground(new Color(188,143,143));
+		g2d.setBackground(new Color(25,25,112));
 		g2d.clearRect(0, 0, maxWidth, maxHeight);
 		
 		// set the origin to the centre
@@ -59,7 +57,7 @@ public class Dwelling extends JPanel implements ActionListener {
 				g2d.drawRect(-(radius + radiusExtention), -(radius + radiusExtention),
 						(radius + radiusExtention)*2, (radius + radiusExtention)*2);
 		
-		// Перетворення для анімації руху.
+		// movement transformation
 		g2d.translate(tx, ty);
 		
 		GeneralPath roof = new GeneralPath();
@@ -68,14 +66,13 @@ public class Dwelling extends JPanel implements ActionListener {
 			roof.lineTo(points[k][0], points[k][1]);
 		roof.closePath();
 		
-		// Перетворення для анімації масштабу
+		// scale transformation
 		g2d.scale(scale, 0.99);
 		
 		g2d.setColor(Color.gray);
 		g2d.fill(roof);
 		g2d.setColor(Color.green);
-		//g2d.fillRect(-100, -100, 200, 200);
-		g2d.setColor(new Color(139,69,19));
+		g2d.setColor(new Color(139, 69, 19));
 		g2d.fillRect(-90, -25, 180, 115);
 		g2d.setColor(Color.yellow);
 		g2d.fillRect(-70, 0, 30, 30);
@@ -85,6 +82,17 @@ public class Dwelling extends JPanel implements ActionListener {
 		g2d.fillRect(-40, -90, 10, 10);
 		g2d.fillRect(60, -60, 10, 10);
 		g2d.fillRect(30, -90, 10, 10);
+		
+		GradientPaint gp = new GradientPaint(5, 25, 
+			    new Color(119,136,153), 20, 2, Color.black, true);
+	    g2d.setPaint(gp);
+	    g2d.fillRect(-20, -10, 40, 100);
+	    
+	    g2d.setColor(Color.white);
+	    BasicStroke bs = new BasicStroke(8, BasicStroke.CAP_ROUND, 
+	    		BasicStroke.JOIN_BEVEL);
+	    g2d.setStroke(bs);
+	    g2d.drawLine(-90, 90, 90, 90);
 	}
 	
 	public static void main(String[] args) {
@@ -111,18 +119,18 @@ public class Dwelling extends JPanel implements ActionListener {
 		}
 		
 		double radiusInSquare = Math.pow(radius, 2);
-		if (tx > 0 && ty >= 0){
+		if (tx <= 0 && ty < 0){
 			tx -= deltaX;
-			ty = Math.abs(Math.sqrt(radiusInSquare - Math.pow(tx, 2)));
-		}else if(tx <= 0 && ty > 0){
+			ty = (-1) * Math.abs(Math.sqrt(radiusInSquare - Math.pow(tx, 2)));
+		}else if(tx > 0 && ty <= 0){
 			tx -= deltaX;
+			ty = (-1) * Math.abs(Math.sqrt(radiusInSquare - Math.pow(tx, 2)));
+		}else if(tx >= 0 && ty > 0){
+			tx += deltaX;
 			ty = Math.abs(Math.sqrt(radiusInSquare - Math.pow(tx, 2)));
-		}else if(tx < 0 && ty <= 0){
+		}else if(tx < 0 && ty >= 0){
 			tx += deltaX;
-			ty = (-1) * Math.abs(Math.sqrt(radiusInSquare - Math.pow(tx, 2)));
-		}else if(tx >= 0 && ty < 0){
-			tx += deltaX;
-			ty = (-1) * Math.abs(Math.sqrt(radiusInSquare - Math.pow(tx, 2)));
+			ty = Math.abs(Math.sqrt(radiusInSquare - Math.pow(tx, 2)));
 		}
 		
 		scale += deltaScale;
