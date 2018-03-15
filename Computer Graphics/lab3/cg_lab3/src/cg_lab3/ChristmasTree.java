@@ -18,30 +18,28 @@ public class ChristmasTree extends Application {
 		Group root = new Group();
 		Scene scene = new Scene (root, 800, 800);
 		
-		Rectangle prop_stand = new Rectangle(330, 625, 140, 75);
-		prop_stand.setArcHeight(68);
-		prop_stand.setArcWidth(140);
-		prop_stand.setFill(Paint.valueOf("#D2B48C"));
-		prop_stand.setStroke(Color.BLACK);
-		prop_stand.setStrokeWidth(3);
-		root.getChildren().add(prop_stand);
-		/*
-		Arc prop_arc = new Arc(400, 665, 70, 33, 190, 160);
-		prop_arc.setType(ArcType.OPEN);
-		prop_arc.setStroke(Color.BLACK);
-		prop_arc.setFill(Color.WHITE);
-		root.getChildren().add(prop_arc);
-		*/
-		Ellipse propShadow = new Ellipse(400, 655, 70, 35);
-		propShadow.setFill(Paint.valueOf("#D2B48C"));
-		propShadow.setStroke(Color.BLACK);
-		propShadow.setStrokeWidth(3);
-		root.getChildren().add(propShadow);
-		/*
-		Ellipse prop = new Ellipse(430, 655, 70, 35);
-		prop.setFill(Color.BROWN);
+		// prop drawing
+		Rectangle prop_under = new Rectangle(330, 625, 140, 75);
+		prop_under.setArcHeight(68);
+		prop_under.setArcWidth(140);
+		prop_under.setFill(Paint.valueOf("#D2B48C"));
+		prop_under.setStroke(Color.BLACK);
+		prop_under.setStrokeWidth(3);
+		root.getChildren().add(prop_under);
+		
+		Ellipse prop = new Ellipse(400, 655, 70, 35);
+		prop.setFill(Paint.valueOf("#DEB887"));
+		prop.setStroke(Color.BLACK);
+		prop.setStrokeWidth(3);
 		root.getChildren().add(prop);
-		*/
+		
+		Arc prop_light_up_arc = new Arc(400, 655, 68, 33, 100, 170);
+		prop_light_up_arc.setType(ArcType.ROUND);
+		prop_light_up_arc.setFill(Paint.valueOf("#F5DEB3"));
+		Arc prop_light_down_arc = new Arc(400, 655, 45, 33, 100, 170);
+		prop_light_down_arc.setType(ArcType.ROUND);
+		prop_light_down_arc.setFill(Paint.valueOf("#DEB887"));
+		root.getChildren().addAll(prop_light_up_arc, prop_light_down_arc);
 		
 		// trunk drawing
 		Rectangle trunk = new Rectangle(370, 580, 60, 85);
@@ -153,8 +151,7 @@ public class ChristmasTree extends Application {
         setBallCoords(balls[20], 466, 583, balls_light[20]);
         
         for (int i=0; i<balls.length; i++){
-        	root.getChildren().add(balls[i]);
-        	root.getChildren().add(balls_light[i]);
+        	root.getChildren().addAll(balls[i], balls_light[i]);
         }
 		
 		primaryStage.setTitle("Christmas Tree 9000");
