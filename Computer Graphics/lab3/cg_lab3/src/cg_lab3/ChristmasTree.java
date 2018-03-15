@@ -1,5 +1,10 @@
 package cg_lab3;
 
+import javafx.animation.ParallelTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -7,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ChristmasTree extends Application {
 	public static void main (String args[]) {
@@ -16,7 +22,7 @@ public class ChristmasTree extends Application {
 	@Override
     public void start(Stage primaryStage) {
 		Group root = new Group();
-		Scene scene = new Scene (root, 800, 800);
+		Scene scene = new Scene (root, 1600, 800);
 		
 		// prop drawing
 		Rectangle prop_under = new Rectangle(330, 625, 140, 75);
@@ -153,6 +159,37 @@ public class ChristmasTree extends Application {
         for (int i=0; i<balls.length; i++){
         	root.getChildren().addAll(balls[i], balls_light[i]);
         }
+        
+        // Animation
+        int cycleCount = 2; // 
+        int time = 2000;
+        
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(time), root);
+   		scaleTransition.setToX(-1f);
+   		scaleTransition.setToY(1f);
+   		scaleTransition.setCycleCount(cycleCount);
+   		scaleTransition.setAutoReverse(true);
+   		
+   		TranslateTransition translateTransition = new TranslateTransition(Duration.millis(time), root);
+   		translateTransition.setFromX(50);
+   		translateTransition.setToX(750);
+   		translateTransition.setCycleCount(cycleCount+2);
+   		translateTransition.setAutoReverse(true);
+   		
+   		RotateTransition rotateTransition = new RotateTransition(Duration.millis(time), root);
+   		rotateTransition.setByAngle(360f);
+   		rotateTransition.setCycleCount(cycleCount);
+   		rotateTransition.setAutoReverse(true);
+   		
+   		ParallelTransition parallelTransition = new ParallelTransition();
+   		parallelTransition.getChildren().addAll(
+   				translateTransition,
+   			    scaleTransition,
+   			    rotateTransition
+   		);
+   		
+   		parallelTransition.setCycleCount(Timeline.INDEFINITE);
+   		parallelTransition.play();
 		
 		primaryStage.setTitle("Christmas Tree 9000");
 		primaryStage.setScene(scene);
