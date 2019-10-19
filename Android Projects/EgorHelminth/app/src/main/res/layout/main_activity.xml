@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="412dp"
+    android:id="@+id/relLayout"
+    android:layout_width="412dp"
     android:layout_height="732dp">
 
     <ImageView
@@ -26,22 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:src="@drawable/pointers2">
-
-        <!--
-        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/buttonLeft"
-                android:layout_width="206dp"
-                android:layout_height="match_parent"
-                android:onClick="moveLeft"/>
-
-            <ImageView
-                android:id="@+id/buttonRight"
-                android:layout_width="206dp"
-                android:layout_height="match_parent"
-                android:onClick="moveRight"/>
-        </LinearLayout>
-        -->
      </ImageView>
 
     <LinearLayout android:id="@+id/buttonsField" android:layout_width="match_parent" android:layout_height="70dp" android:orientation="horizontal">

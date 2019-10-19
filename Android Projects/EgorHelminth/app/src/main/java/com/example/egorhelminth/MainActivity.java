@@ -3,24 +3,24 @@ package com.example.egorhelminth;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    static private final int MOVEMENT_TIME = 40; //70
+
     private ImageView helminth;
     private LinearLayout buttonsField;
     private ImageView buttonsImage;
-    static private final int backgroundTime = 4000;
-    static private final int deltaX = 300;
-    static private final int movementTime = 40; //70
     boolean movementBlock = false;
+    int helminthPos = 1; // 0 - left, 1 - center, 2 - right
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,71 +40,66 @@ public class MainActivity extends AppCompatActivity {
         helminth.setX(275);
         helminth.setY(1050);
 
-        View view1 = findViewById(R.id.path1);
-        View view2 = findViewById(R.id.path2);
+        BackgroundThread backThread = new BackgroundThread();
+        backThread.setActivity(this);
 
-        translatePath(view1, view2);
+        GeneratorThread genThread = new GeneratorThread();
+        genThread.setActivity(this);
+
+        backThread.start();
+        genThread.start();
     }
 
-    private void translatePath(View view1, View view2){
-        TranslateAnimation anim1 = new TranslateAnimation(0, 0, 0, 1920);
-        anim1.setDuration(backgroundTime);
-        TranslateAnimation anim2 = new TranslateAnimation(0, 0, -1920, 0);
-        anim2.setDuration(backgroundTime);
-        //anim1.setFillAfter(true);
-        //anim2.setFillAfter(true);
-        anim1.setRepeatCount(Animation.INFINITE);
-        anim2.setRepeatCount(Animation.INFINITE);
+    private void generateExampleFobject(){
+        FloatingObject fobject = new FloatingObject(this);
+        fobject.setFobjectType(1);
+        fobject.setSide(0);
 
-        view1.startAnimation(anim1);
-        view2.startAnimation(anim2);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.height = (int) getResources().getDimension(R.dimen.imageview_height);
+        layoutParams.width = (int) getResources().getDimension(R.dimen.imageview_width);
+
+        RelativeLayout relLayout = findViewById(R.id.relLayout);
+        relLayout.addView(fobject, layoutParams);
     }
 
     public void moveLeft(View view){
         if(!movementBlock){
             TranslateAnimation anim;
-            float y = helminth.getY();
-            switch((int)(helminth.getX())){
-                case (275-deltaX): break;
-                case 275:
-                    anim = new TranslateAnimation(0, -deltaX, 0, 0);
-                    anim.setDuration(movementTime);
+            switch(helminthPos){
+                case 0: break;
+                case 1:
+                    anim = new TranslateAnimation(0, -CONSTANT.DELTA_X, 0, 0);
+                    anim.setDuration(MOVEMENT_TIME);
+                    anim.setFillAfter(true);
                     helminth.startAnimation(anim);
                     anim.setAnimationListener(new TranslateAnimation.AnimationListener() {
                         @Override
-                        public void onAnimationStart(Animation animation) {
-                            movementBlock = true;
-                        }
+                        public void onAnimationStart(Animation animation) { movementBlock = true; }
                         @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
+                        public void onAnimationRepeat(Animation animation) { }
                         @Override
-                        public void onAnimationEnd(Animation animation) {
-                            helminth.setX(275-deltaX);
-                            movementBlock = false;
-                        }
+                        public void onAnimationEnd(Animation animation) { movementBlock = false; }
                     });
+                    helminthPos = 0;
                     break;
-                case (275+deltaX):
-                    anim = new TranslateAnimation(0, -deltaX, 0, 0);
-                    anim.setDuration(movementTime);
+                case 2:
+                    anim = new TranslateAnimation(CONSTANT.DELTA_X, 0, 0, 0);
+                    anim.setDuration(MOVEMENT_TIME);
+                    anim.setFillAfter(true);
                     helminth.startAnimation(anim);
                     anim.setAnimationListener(new TranslateAnimation.AnimationListener() {
                         @Override
-                        public void onAnimationStart(Animation animation) {
-                            movementBlock = true;
-                        }
+                        public void onAnimationStart(Animation animation) { movementBlock = true; }
                         @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
+                        public void onAnimationRepeat(Animation animation) { }
                         @Override
-                        public void onAnimationEnd(Animation animation) {
-                            helminth.setX(275);
-                            movementBlock = false;
-                        }
+                        public void onAnimationEnd(Animation animation) { movementBlock = false; }
                     });
+                    helminthPos = 1;
                     break;
             }
         }
@@ -113,48 +108,38 @@ public class MainActivity extends AppCompatActivity {
     public void moveRight(View view){
         if(!movementBlock){
             TranslateAnimation anim;
-            switch((int)(helminth.getX())){
-                case (275-deltaX):
-                    anim = new TranslateAnimation(0, deltaX, 0, 0);
-                    anim.setDuration(movementTime);
+            switch(helminthPos){
+                case 0:
+                    anim = new TranslateAnimation(-CONSTANT.DELTA_X, 0, 0, 0);
+                    anim.setDuration(MOVEMENT_TIME);
+                    anim.setFillAfter(true);
                     helminth.startAnimation(anim);
                     anim.setAnimationListener(new TranslateAnimation.AnimationListener() {
                         @Override
-                        public void onAnimationStart(Animation animation) {
-                            movementBlock = true;
-                        }
+                        public void onAnimationStart(Animation animation) { movementBlock = true; }
                         @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
+                        public void onAnimationRepeat(Animation animation) { }
                         @Override
-                        public void onAnimationEnd(Animation animation) {
-                            helminth.setX(275);
-                            movementBlock = false;
-                        }
+                        public void onAnimationEnd(Animation animation) { movementBlock = false; }
                     });
+                    helminthPos = 1;
                     break;
-                case 275:
-                    anim = new TranslateAnimation(0, deltaX, 0, 0);
-                    anim.setDuration(movementTime);
+                case 1:
+                    anim = new TranslateAnimation(0, CONSTANT.DELTA_X, 0, 0);
+                    anim.setDuration(MOVEMENT_TIME);
+                    anim.setFillAfter(true);
                     helminth.startAnimation(anim);
                     anim.setAnimationListener(new TranslateAnimation.AnimationListener() {
                         @Override
-                        public void onAnimationStart(Animation animation) {
-                            movementBlock = true;
-                        }
+                        public void onAnimationStart(Animation animation) { movementBlock = true; }
                         @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
+                        public void onAnimationRepeat(Animation animation) { }
                         @Override
-                        public void onAnimationEnd(Animation animation) {
-                            helminth.setX(275+deltaX);
-                            movementBlock = false;
-                        }
+                        public void onAnimationEnd(Animation animation) { movementBlock = false; }
                     });
+                    helminthPos = 2;
                     break;
-                case (275+deltaX): break;
+                case 2: break;
             }
         }
     }
