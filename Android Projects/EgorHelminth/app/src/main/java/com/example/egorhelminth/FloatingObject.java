@@ -40,7 +40,7 @@ public class FloatingObject extends AppCompatImageView {
 
     public boolean setSide(int side){
         int centerPos = 447;
-        super.setY(100);
+        super.setY(-100);
         switch(side){
             case 0: // left
                 super.setX(centerPos - CONSTANT.DELTA_X);

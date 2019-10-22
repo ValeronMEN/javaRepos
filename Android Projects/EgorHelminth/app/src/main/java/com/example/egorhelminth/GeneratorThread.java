@@ -1,18 +1,20 @@
 package com.example.egorhelminth;
 
 import android.app.Activity;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
 
 public class GeneratorThread extends Thread {
     private Activity activity;
     private Queue<FloatingObject> foQueue;
+    private int yLenght;
+    private int animDuration;
 
     @Override
     public void run() {
@@ -23,6 +25,9 @@ public class GeneratorThread extends Thread {
             foQueue.add(fo);
         }
 
+        yLenght = 1920 + 500;
+        animDuration = (int)Math.floor((Constants.BACKGROUND_TIME / 1920.0)) * yLenght;
+
         while(foQueue.size() != 0){
             try {
                 activity.runOnUiThread(new Runnable() {
@@ -30,9 +35,10 @@ public class GeneratorThread extends Thread {
                     @Override
                     public void run() {
                         Random rand = new Random();
-                        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, 1920);
-                        anim.setDuration(4000);
+                        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, yLenght);
+                        anim.setDuration(animDuration);
                         anim.setFillAfter(true);
+                        anim.setInterpolator(new LinearInterpolator());
 
                         FloatingObject foInstance = foQueue.poll();
                         foInstance.setFobjectType(1);
@@ -51,7 +57,7 @@ public class GeneratorThread extends Thread {
                         foInstance.startAnimation(anim);
                     }
                 });
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
