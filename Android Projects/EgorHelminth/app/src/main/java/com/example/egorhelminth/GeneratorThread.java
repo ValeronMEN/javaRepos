@@ -3,59 +3,58 @@ package com.example.egorhelminth;
 import android.app.Activity;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 
 public class GeneratorThread extends Thread {
     private Activity activity;
-    private PriorityQueue<FloatingObject> foQueue;
+    private Queue<FloatingObject> foQueue;
 
     @Override
     public void run() {
-        foQueue = new PriorityQueue<FloatingObject>();
-        try{
-            for(int i = 0; i < 15; i++) {
-                foQueue.add(FloatingObject.class.newInstance());
-            }
-            generateBarrier();
+        foQueue = new LinkedList<FloatingObject>();
+
+        for(int i = 0; i < 15; i++) {
+            FloatingObject fo = new FloatingObject(activity);
+            foQueue.add(fo);
         }
-        catch(IllegalAccessException|InstantiationException err){
 
-        }
-        //FloatingObject fo = foQueue.poll();
-    }
+        while(foQueue.size() != 0){
+            try {
+                activity.runOnUiThread(new Runnable() {
 
-    private void generateBarrier(){
-        try{
-            Random rand = new Random();
-            while(true){
-                FloatingObject fobject = foQueue.poll();
-                fobject.setFobjectType(1);
-                fobject.setSide(rand.nextInt(2));
+                    @Override
+                    public void run() {
+                        Random rand = new Random();
+                        TranslateAnimation anim = new TranslateAnimation(0, 0, 0, 1920);
+                        anim.setDuration(4000);
+                        anim.setFillAfter(true);
 
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                layoutParams.height = (int) activity.getResources().getDimension(R.dimen.imageview_height);
-                layoutParams.width = (int) activity.getResources().getDimension(R.dimen.imageview_width);
+                        FloatingObject foInstance = foQueue.poll();
+                        foInstance.setFobjectType(1);
+                        foInstance.setSide(rand.nextInt(2));
 
-                RelativeLayout relLayout = activity.findViewById(R.id.relLayout);
-                relLayout.addView(fobject, layoutParams);
+                        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        layoutParams.height = (int) activity.getResources().getDimension(R.dimen.imageview_height);
+                        layoutParams.width = (int) activity.getResources().getDimension(R.dimen.imageview_width);
 
-
-                TranslateAnimation anim = new TranslateAnimation(0, 0, 0, 2400);
-                anim.setDuration(12000);
-                anim.setFillAfter(true);
-                //foQueue.add(fobject);
-                fobject.startAnimation(anim);
-
+                        RelativeLayout relLayout = activity.findViewById(R.id.relLayout);
+                        relLayout.addView(foInstance, layoutParams);
+                        //foQueue.add(fobject);
+                        foInstance.startAnimation(anim);
+                    }
+                });
                 Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }
-        catch(InterruptedException err){
-
         }
     }
 

@@ -8,7 +8,6 @@ import android.view.animation.TranslateAnimation;
 
 public class BackgroundThread extends Thread {
     private Activity activity;
-    static private final int BACKGROUND_TIME = 4000;
 
     @Override
     public void run() {
@@ -24,9 +23,9 @@ public class BackgroundThread extends Thread {
 
     private void translatePath(View view1, View view2){
         TranslateAnimation anim1 = new TranslateAnimation(0, 0, 0, 1920);
-        anim1.setDuration(BACKGROUND_TIME);
+        anim1.setDuration(Constants.BACKGROUND_TIME);
         TranslateAnimation anim2 = new TranslateAnimation(0, 0, -1920, 0);
-        anim2.setDuration(BACKGROUND_TIME);
+        anim2.setDuration(Constants.BACKGROUND_TIME);
         anim1.setRepeatCount(Animation.INFINITE);
         anim2.setRepeatCount(Animation.INFINITE);
         anim1.setInterpolator(new LinearInterpolator());
