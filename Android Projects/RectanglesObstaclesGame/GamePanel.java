@@ -3,6 +3,7 @@ package com.example.egorhelminths;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
@@ -11,10 +12,7 @@ import android.view.SurfaceView;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-
-    private RectPlayer player;
-    private Point playerPoint;
-    private ObstacleManager obstacleManager;
+    private SceneManager manager;
 
     public GamePanel(Context context){
         super(context);
@@ -23,10 +21,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
 
-        player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(255, 0, 0));
-        playerPoint = new Point(150, 150);
-
-        obstacleManager = new ObstacleManager(200, 350, 75, Color.BLACK);
+        manager = new SceneManager();
 
         this.setFocusable(true);
     }
@@ -58,13 +53,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        //return super.onTouchEvent(event);
-
-        switch(event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                playerPoint.set((int)event.getX(), (int)event.getY());
-        }
+        manager.receiveTouch(event);
         return true;
     }
 
@@ -72,14 +61,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas){
         super.draw(canvas);
 
-        canvas.drawColor(Color.WHITE);
-
-        player.draw(canvas);
-        obstacleManager.draw(canvas);
+        manager.draw(canvas);
     }
 
     public void update(){
-        player.update(playerPoint);
-        obstacleManager.update();
+        manager.update();
     }
 }
