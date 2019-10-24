@@ -55,35 +55,51 @@ public class Obstacle implements GameObject {
     }
 
     private void setBitmap(){
-        BitmapFactory bf = new BitmapFactory();
         if(obstacleType.equals("shuba")){
-            obstacleBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shuba);
+            obstacleBitmap = Constants.shuba;
         }else if(obstacleType.equals("shoe")){
-            obstacleBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shoe);
+            obstacleBitmap = Constants.shoe;
         }else if(obstacleType.equals("tablette")){
-            obstacleBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.tablette);
+            obstacleBitmap = Constants.tablette;
         }else if(obstacleType.equals("meat")){
             Random rand = new Random();
             int meatType = rand.nextInt(2);
             switch(meatType){
                 case 0:
-                    obstacleBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat1);
+                    obstacleBitmap = Constants.meat1;
                     break;
                 case 1:
-                    obstacleBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat2);
+                    obstacleBitmap = Constants.meat2;
                     break;
                 case 2:
-                    obstacleBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat3);
+                    obstacleBitmap = Constants.meat3;
                     break;
                 default: System.out.println("Meat skin error"); break;
             }
         }
     }
 
-    public boolean playerCollide(Helminth player){
-        if(!isVisible)
-            return false;
-        return Rect.intersects(rectangle, player.getRectangle());
+    public int playerCollide(Helminth player){
+        if(isVisible && intersectRects(rectangle, player.getRectangle())){
+            switch(obstacleType){
+                case "meat": return 1;
+                case "shoe": return 2;
+                case "shuba": return 3;
+                case "tablette": return -1;
+            }
+        }
+        return 0;
+    }
+
+    //Rect.intersects(rectangle, player.getRectangle())
+    private boolean intersectRects(Rect obstacleRect, Rect playerRect){
+        if(playerRect.contains(obstacleRect.left, obstacleRect.top) ||
+                playerRect.contains(obstacleRect.left, obstacleRect.bottom) ||
+                playerRect.contains(obstacleRect.right, obstacleRect.top) ||
+                playerRect.contains(obstacleRect.right, obstacleRect.bottom)){
+            return true;
+        }
+        return false;
     }
 
     @Override

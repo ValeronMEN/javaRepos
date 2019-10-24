@@ -1,5 +1,6 @@
 package com.example.egorhelminth_surfaceview;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -26,7 +27,15 @@ public class GameplayScene implements Scene {
         Constants.PLAYER_X_1 = Constants.SCREEN_WIDTH/2;
         Constants.PLAYER_X_2 = 4*Constants.SCREEN_WIDTH/5;
 
-        player = new Helminth(new Rect(100, 100, 500, 550));
+        BitmapFactory bf = new BitmapFactory();
+        Constants.shuba = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shuba);
+        Constants.shoe = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shoe);
+        Constants.tablette = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.tablette);
+        Constants.meat1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat1);
+        Constants.meat2 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat2);
+        Constants.meat3 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat3);
+
+        player = new Helminth(new Rect(0, 0, 400, 450));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, Constants.PLAYER_Y);
         player.update(playerPoint);
 
@@ -36,6 +45,7 @@ public class GameplayScene implements Scene {
     public void reset(){
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, Constants.PLAYER_Y);
         player.update(playerPoint);
+        player.setCurrentHelminthState(0);
 
         renewObstacleManager();
 
@@ -43,15 +53,15 @@ public class GameplayScene implements Scene {
     }
 
     private void renewObstacleManager(){
-        obstacleManager = new ObstacleManager(400, 300, player);
+        obstacleManager = new ObstacleManager(300, 200, player);
     }
 
     @Override
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
 
-        player.draw(canvas);
         obstacleManager.draw(canvas);
+        player.draw(canvas);
 
         if(gameOver){
             Paint paint = new Paint();
@@ -83,13 +93,10 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             obstacleManager.update();
 
-            /*
             if(obstacleManager.playerCollide(player)){
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
             }
-
-             */
         }
     }
 
@@ -107,12 +114,14 @@ public class GameplayScene implements Scene {
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                movingPlayer = false;
-                float deltaX = event.getX() - touchStartX;
-                if(deltaX > 5){ // right
-                    moveHelminth("right");
-                }else if(deltaX < -5){ // left
-                    moveHelminth("left");
+                if(!gameOver){
+                    movingPlayer = false;
+                    float deltaX = event.getX() - touchStartX;
+                    if(deltaX > 5){ // right
+                        moveHelminth("right");
+                    }else if(deltaX < -5){ // left
+                        moveHelminth("left");
+                    }
                 }
                 break;
         }

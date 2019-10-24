@@ -1,8 +1,11 @@
 package com.example.egorhelminth_surfaceview;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,6 +22,9 @@ public class ObstacleManager {
 
     private Helminth player;
 
+    private Rect [] backgroundRectangles;
+    private Bitmap backgroundBitmap;
+
     public ObstacleManager(int obstacleGap, int obstacleSize, Helminth player){
         this.obstacleGap = obstacleGap;
         this.obstacleSize = obstacleSize;
@@ -29,19 +35,39 @@ public class ObstacleManager {
         obstacles = new ArrayList<Obstacle>();
 
         populateObstacles();
+
+        BitmapFactory bf = new BitmapFactory();
+        this.backgroundBitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.background_simple);
+
+        Rect backgroundRect1 = new Rect(0, 0, Constants.SCREEN_WIDTH, 2*Constants.SCREEN_HEIGHT);
+        Rect backgroundRect2 = new Rect(0, -2*Constants.SCREEN_HEIGHT, Constants.SCREEN_WIDTH, 0);
+        this.backgroundRectangles = new Rect[]{backgroundRect1, backgroundRect2};
     }
 
-    /*
     public boolean playerCollide(Helminth player){
         for(Obstacle ob : obstacles){
-            if(ob.playerCollide(player)){
-                return true;
+            int collision = ob.playerCollide(player);
+            if(collision == 0){
+                continue;
+            }else if(collision == -1){
+                if(player.getCurrentHelminthState() == 1){
+                    ob.setVisibility(false);
+                }else{
+                    return true;
+                }
+            }else if(collision == 1){ // meat
+                score++;
+                ob.setVisibility(false);
+            }else if(collision == 2){ // shoe
+                player.setCurrentHelminthState(1);
+                ob.setVisibility(false);
+            }else if(collision == 3){ // shuba
+                player.setCurrentHelminthState(2);
+                ob.setVisibility(false);
             }
         }
         return false;
     }
-
-     */
 
     private void populateObstacles(){
         int currY = -2*Constants.SCREEN_HEIGHT; //-5*Constants.SCREEN_HEIGHT/4;
@@ -65,7 +91,13 @@ public class ObstacleManager {
             tab = false;
 
         Random rand = new Random();
-        int tablettesAmount = rand.nextInt(2); // 0, 1 or 2
+        int tablettesAmount = 2; // 0, 1 or 2
+        int tabletteProbability = rand.nextInt(30);
+        if(tabletteProbability < 5){
+            tablettesAmount = 0;
+        }else if(tabletteProbability < 15){
+            tablettesAmount = 1;
+        }
 
         int tablettePos1 = -1;
         int tablettePos2 = -1;
@@ -77,10 +109,10 @@ public class ObstacleManager {
                 tablettePos1 = rand.nextInt(2);
                 break;
             case 2:
-                tablettePos1 = rand.nextInt(2);
-                tablettePos2 = rand.nextInt(2);
+                tablettePos1 = rand.nextInt(3);
+                tablettePos2 = rand.nextInt(3);
                 while(tablettePos1 == tablettePos2){
-                    tablettePos2 = rand.nextInt(2);
+                    tablettePos2 = rand.nextInt(3);
                 }
                 break;
         }
@@ -147,9 +179,30 @@ public class ObstacleManager {
                 obstacles.remove(obstacles.size() - 1);
             }
         }
+
+
+        // background updating
+        for(Rect backgroundRectangle : backgroundRectangles) {
+            backgroundRectangle.top += speed * elapsedTime;
+            backgroundRectangle.bottom += speed * elapsedTime;
+        }
+        if(backgroundRectangles[0].top >= Constants.SCREEN_HEIGHT){
+            backgroundRectangles[0].top = backgroundRectangles[1].top-2*Constants.SCREEN_HEIGHT;
+            backgroundRectangles[0].bottom = backgroundRectangles[1].top;
+        }
+        if(backgroundRectangles[1].top >= Constants.SCREEN_HEIGHT){
+            backgroundRectangles[1].top = backgroundRectangles[0].top-2*Constants.SCREEN_HEIGHT;
+            backgroundRectangles[1].bottom = backgroundRectangles[0].top;
+        }
     }
 
     public void draw(Canvas canvas){
+        // background drawing
+        for(Rect backgroundRectangle : backgroundRectangles){
+            canvas.drawBitmap(backgroundBitmap, null, backgroundRectangle, new Paint());
+        }
+
+        // obstacles drawing
         for(Obstacle ob : obstacles){
             ob.draw(canvas);
         }
