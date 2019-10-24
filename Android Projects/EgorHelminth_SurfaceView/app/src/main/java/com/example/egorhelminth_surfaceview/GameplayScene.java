@@ -22,6 +22,8 @@ public class GameplayScene implements Scene {
 
     private float touchStartX;
 
+    private MediaPlayer mp;
+
     public GameplayScene(){
         Constants.PLAYER_Y = (int)(5*Constants.SCREEN_HEIGHT/6);
         Constants.PLAYER_X_0 = Constants.SCREEN_WIDTH/5;
@@ -47,6 +49,8 @@ public class GameplayScene implements Scene {
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, Constants.PLAYER_Y);
         player.update(playerPoint);
         player.setCurrentHelminthState(0);
+        player.turnOffInShuba();
+        player.turnOffImmortality();
 
         renewObstacleManager();
 
@@ -54,7 +58,8 @@ public class GameplayScene implements Scene {
     }
 
     private void renewObstacleManager(){
-        obstacleManager = new ObstacleManager(300, 200, player);
+        mp = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.bm_helminth);
+        obstacleManager = new ObstacleManager(300, 200, player, mp);
     }
 
     @Override
@@ -98,6 +103,9 @@ public class GameplayScene implements Scene {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
             }
+        }
+        if(gameOver){
+            mp.pause();
         }
     }
 

@@ -37,18 +37,18 @@ public class Helminth implements GameObject {
     public void turnOffImmortality(){
         isImmortal = false;
         if(isInShuba){
-            currentHelminthState = 2;
+            setCurrentHelminthState(2);
         }else{
-            currentHelminthState = 0;
+            setCurrentHelminthState(0);
         }
     }
 
     public void turnOffInShuba(){
         isInShuba = false;
         if(isImmortal){
-            currentHelminthState = 1;
+            setCurrentHelminthState(1);
         }else{
-            currentHelminthState = 0;
+            setCurrentHelminthState(0);
         }
     }
 

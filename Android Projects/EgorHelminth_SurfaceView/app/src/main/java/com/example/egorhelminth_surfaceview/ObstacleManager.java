@@ -34,11 +34,11 @@ public class ObstacleManager {
     private BonusTimer bonusTimerShuba;
     private BonusTimer bonusTimerShoe;
 
-    public ObstacleManager(int obstacleGap, int obstacleSize, Helminth player){
+    public ObstacleManager(int obstacleGap, int obstacleSize, Helminth player, MediaPlayer mediaPlayer){
         this.obstacleGap = obstacleGap;
         this.obstacleSize = obstacleSize;
         this.player = player;
-        this.mp = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.bm_helminth);
+        this.mp = mediaPlayer;
 
         startTime = initTime = System.currentTimeMillis();
         obstacles = new ArrayList<Obstacle>();
@@ -52,9 +52,9 @@ public class ObstacleManager {
         Rect backgroundRect2 = new Rect(0, -2*Constants.SCREEN_HEIGHT, Constants.SCREEN_WIDTH, 0);
         this.backgroundRectangles = new Rect[]{backgroundRect1, backgroundRect2};
 
-        bonusTimerShuba = new BonusTimer(Constants.SCREEN_WIDTH/3, (int)(Constants.SCREEN_HEIGHT/15.0),
+        bonusTimerShuba = new BonusTimer(7*Constants.SCREEN_WIDTH/24, (int)(Constants.SCREEN_HEIGHT/10.0),
                 Color.MAGENTA, player, "shuba", 412000);
-        bonusTimerShoe = new BonusTimer(2*Constants.SCREEN_WIDTH/3, (int)(Constants.SCREEN_HEIGHT/15.0),
+        bonusTimerShoe = new BonusTimer(2*Constants.SCREEN_WIDTH/3, (int)(Constants.SCREEN_HEIGHT/10.0),
                 Color.BLUE, player, "shoe", 30000);
 
         diablo = new Diablo();
@@ -86,8 +86,8 @@ public class ObstacleManager {
                 player.setCurrentHelminthState(2);
                 ob.setVisibility(false);
                 this.goshaObj.makeActive();
-                mp.reset();
                 mp.setLooping(false);
+                mp.seekTo(0);
                 mp.start();
                 bonusTimerShuba.start();
             }
@@ -167,13 +167,13 @@ public class ObstacleManager {
 
         Random rand = new Random();
 
-        if(rand.nextInt(100) <= 3 && !player.getImmortality()){
+        if(rand.nextInt(1000) <= 20 && !player.getImmortality()){
             return new Obstacle(pathX, obstacleY, "SHOE", obstacleSize);
         }
-        if(rand.nextInt(100) <= 3 && !player.getInShuba()){
+        if(rand.nextInt(1000) <= 5 && !player.getInShuba()){
             return new Obstacle(pathX, obstacleY, "SHUBA", obstacleSize);
         }
-        if(rand.nextInt(100) <= 50){
+        if(rand.nextInt(1000) <= 500){
             return new Obstacle(pathX, obstacleY, "meat", obstacleSize);
         }
         Obstacle nullObstacle = new Obstacle(pathX, obstacleY, "meat", obstacleSize);

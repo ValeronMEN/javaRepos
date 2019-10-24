@@ -69,7 +69,16 @@ public class BonusTimer implements GameObject {
 
             Paint paint = new Paint();
             paint.setColor(color);
-            paint.setTextSize(80);
+            paint.setTextSize(65);
+
+            String message = "";
+            if(this.timerType.equals("shuba")){
+                message = "Shuba mode";
+            }else if(this.timerType.equals("shoe")){
+                message = "Immortality";
+            }
+
+            canvas.drawText(message, xPos-70, yPos-70, paint);
             canvas.drawText(minutesStr + ":" + secondsStr + ":" + centiseconds, xPos, yPos, paint); // + paint.descent() - paint.ascent()
         }
     }
