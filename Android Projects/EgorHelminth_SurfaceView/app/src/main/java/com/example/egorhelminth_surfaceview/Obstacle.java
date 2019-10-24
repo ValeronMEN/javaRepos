@@ -13,6 +13,26 @@ public class Obstacle implements GameObject {
     private Bitmap obstacleBitmap;
     private String obstacleType;
 
+    private boolean isVisible;
+
+    public Obstacle(int pathX, int obstacleY, String obstacleType, int obstacleSize){
+        this.rectangle = new Rect(0, 0, obstacleSize, obstacleSize);
+        this.obstacleType = obstacleType;
+        this.isVisible = true;
+
+        int obstacleX = 0;
+        switch(pathX){ // 0, 1, 2
+            case 0: obstacleX = Constants.PLAYER_X_0; break;
+            case 1: obstacleX = Constants.PLAYER_X_1; break;
+            case 2: obstacleX = Constants.PLAYER_X_2; break;
+            default: System.out.println("Path X error"); break;
+        }
+
+        rectangle.set(obstacleX - rectangle.width()/2, obstacleY - rectangle.height()/2, obstacleX + rectangle.width()/2, obstacleY + rectangle.height()/2);
+
+        setBitmap();
+    }
+
     public Rect getRectangle(){
         return rectangle;
     }
@@ -22,20 +42,12 @@ public class Obstacle implements GameObject {
         rectangle.bottom += y;
     }
 
-    public Obstacle(int pathX, int obstacleY, String obstacleType, int obstacleSize){
-        this.rectangle = new Rect(0, 0, obstacleSize, obstacleSize);
-        this.obstacleType = obstacleType;
+    public void setVisibility(boolean visibility){
+        this.isVisible = visibility;
+    }
 
-        int obstacleX = 0;
-        switch(pathX){ // 0, 1, 2
-            case 0: obstacleX = Constants.PLAYER_X_0; break;
-            case 1: obstacleX = Constants.PLAYER_X_1; break;
-            case 2: obstacleX = Constants.PLAYER_X_2; break;
-        }
-
-        rectangle.set(obstacleX - rectangle.width()/2, obstacleY - rectangle.height()/2, obstacleX + rectangle.width()/2, obstacleY + rectangle.height()/2);
-
-        setBitmap();
+    public boolean getVisibility(){
+        return this.isVisible;
     }
 
     public String getObstacleType(){
@@ -69,12 +81,15 @@ public class Obstacle implements GameObject {
     }
 
     public boolean playerCollide(Helminth player){
+        if(!isVisible)
+            return false;
         return Rect.intersects(rectangle, player.getRectangle());
     }
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawBitmap(obstacleBitmap, null, rectangle, new Paint());
+        if(isVisible)
+            canvas.drawBitmap(obstacleBitmap, null, rectangle, new Paint());
     }
 
     @Override

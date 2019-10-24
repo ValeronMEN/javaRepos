@@ -118,7 +118,9 @@ public class ObstacleManager {
         if(rand.nextInt(100) <= 50){
             return new Obstacle(pathX, obstacleY, "meat", obstacleSize);
         }
-        return null;
+        Obstacle nullObstacle = new Obstacle(pathX, obstacleY, "meat", obstacleSize);
+        nullObstacle.setVisibility(false);
+        return nullObstacle;
     }
 
     public void update(){
@@ -133,9 +135,9 @@ public class ObstacleManager {
         }
 
         if(obstacles.get(obstacles.size() - 6).getRectangle().top >= Constants.SCREEN_HEIGHT){
-            Obstacle[] sixObstacles = getSixObstacles(obstacles.get(0).getRectangle().top - obstacleSize/2 - obstacleGap, obstacleSize, obstacleGap);
+            Obstacle[] sixObstacles = getSixObstacles(obstacles.get(0).getRectangle().top - 3*obstacleSize/2 - 2*obstacleGap, obstacleSize, obstacleGap);
 
-            for(int i=0; i<sixObstacles.length; i++){
+            for(int i=sixObstacles.length-1; i>=0; i--){
                 if(sixObstacles[i] != null){
                     obstacles.add(0, sixObstacles[i]);
                 }
