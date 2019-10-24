@@ -27,7 +27,7 @@ public class Gosha implements GameObject {
         this.way = "right";
     }
 
-    public void setVisibity(){
+    public void makeActive(){
         if(!isVisible){
             isVisible = true;
             startTime = System.currentTimeMillis();
@@ -55,6 +55,7 @@ public class Gosha implements GameObject {
                 rectangle.right -= speed * elapsedTime;
                 if (rectangle.right <= 0){
                     way = "right";
+                    this.rectangle = new Rect(-sideSize, Constants.SCREEN_HEIGHT - sideSize, 0, Constants.SCREEN_HEIGHT);
                     isVisible = false;
                 }
             }else if(way.equals("stay")){

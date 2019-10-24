@@ -15,6 +15,9 @@ public class Helminth implements GameObject {
 
     private int currentHelminthPos;
 
+    private boolean isImmortal;
+    private boolean isInShuba;
+
     public Helminth(Rect rectangle){
         this.rectangle = rectangle;
         currentHelminthState = 0;
@@ -26,6 +29,27 @@ public class Helminth implements GameObject {
         Bitmap helminth_shuba = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helminth_shuba);
 
         helminthStates = new Bitmap[]{helminth_simple, helminth_shoe, helminth_shuba};
+
+        isImmortal = false;
+        isInShuba = false;
+    }
+
+    public void turnOffImmortality(){
+        isImmortal = false;
+        if(isInShuba){
+            currentHelminthState = 2;
+        }else{
+            currentHelminthState = 0;
+        }
+    }
+
+    public void turnOffInShuba(){
+        isInShuba = false;
+        if(isImmortal){
+            currentHelminthState = 1;
+        }else{
+            currentHelminthState = 0;
+        }
     }
 
     public Rect getRectangle(){
@@ -40,18 +64,27 @@ public class Helminth implements GameObject {
         currentHelminthPos = pos;
     }
 
-    public int getCurrentHelminthState(){
-        return currentHelminthState;
+    public boolean getImmortality(){
+        return isImmortal;
     }
 
-    // 0 - simple, 1 - SHOE, 2 - SHUBA
+    public boolean getInShuba(){
+        return isInShuba;
+    }
+
+    // 0 - simple, 1 - shoe, 2 - shuba
     public void setCurrentHelminthState(int state){
-        if(state == 0 && currentHelminthState == 1){
-            this.rectangle.bottom -= 25;
-        }else if(state == 1 && currentHelminthState != 1){
-            this.rectangle.bottom += 25;
-        }else if(state == 2 && currentHelminthState == 1){
-            this.rectangle.bottom -= 25;
+        if(state == 0){
+            if(currentHelminthState == 1)
+                this.rectangle.bottom -= 25;
+        }else if(state == 1){
+            if(currentHelminthState != 1)
+                this.rectangle.bottom += 25;
+            isImmortal = true;
+        }else if(state == 2){
+            if(currentHelminthState == 1)
+                this.rectangle.bottom -= 25;
+            isInShuba = true;
         }
         currentHelminthState = state;
     }

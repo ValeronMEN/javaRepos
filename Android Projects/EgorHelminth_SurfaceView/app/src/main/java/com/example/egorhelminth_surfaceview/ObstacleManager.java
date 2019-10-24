@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,15 +27,20 @@ public class ObstacleManager {
     private Bitmap backgroundBitmap;
 
     private Gosha goshaObj;
+    private Diablo diablo;
 
-    public ObstacleManager(int obstacleGap, int obstacleSize, Helminth player, Gosha goshaObj){
+    private MediaPlayer mp;
+
+    private BonusTimer bonusTimerShuba;
+    private BonusTimer bonusTimerShoe;
+
+    public ObstacleManager(int obstacleGap, int obstacleSize, Helminth player){
         this.obstacleGap = obstacleGap;
         this.obstacleSize = obstacleSize;
         this.player = player;
-        this.goshaObj = goshaObj;
+        this.mp = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.bm_helminth);
 
         startTime = initTime = System.currentTimeMillis();
-
         obstacles = new ArrayList<Obstacle>();
 
         populateObstacles();
@@ -45,6 +51,14 @@ public class ObstacleManager {
         Rect backgroundRect1 = new Rect(0, 0, Constants.SCREEN_WIDTH, 2*Constants.SCREEN_HEIGHT);
         Rect backgroundRect2 = new Rect(0, -2*Constants.SCREEN_HEIGHT, Constants.SCREEN_WIDTH, 0);
         this.backgroundRectangles = new Rect[]{backgroundRect1, backgroundRect2};
+
+        bonusTimerShuba = new BonusTimer(Constants.SCREEN_WIDTH/3, (int)(Constants.SCREEN_HEIGHT/15.0),
+                Color.MAGENTA, player, "shuba", 412000);
+        bonusTimerShoe = new BonusTimer(2*Constants.SCREEN_WIDTH/3, (int)(Constants.SCREEN_HEIGHT/15.0),
+                Color.BLUE, player, "shoe", 30000);
+
+        diablo = new Diablo();
+        goshaObj = new Gosha();
     }
 
     public boolean playerCollide(Helminth player){
@@ -53,9 +67,11 @@ public class ObstacleManager {
             if(collision == 0){
                 continue;
             }else if(collision == -1){
-                if(player.getCurrentHelminthState() == 1){
+                if(player.getImmortality()){
                     ob.setVisibility(false);
                 }else{
+                    if(mp.isPlaying())
+                        mp.stop();
                     return true;
                 }
             }else if(collision == 1){ // meat
@@ -64,10 +80,16 @@ public class ObstacleManager {
             }else if(collision == 2){ // SHOE
                 player.setCurrentHelminthState(1);
                 ob.setVisibility(false);
+                this.diablo.makeActive();
+                bonusTimerShoe.start();
             }else if(collision == 3){ // SHUBA
                 player.setCurrentHelminthState(2);
                 ob.setVisibility(false);
-                this.goshaObj.setVisibity();
+                this.goshaObj.makeActive();
+                mp.reset();
+                mp.setLooping(false);
+                mp.start();
+                bonusTimerShuba.start();
             }
         }
         return false;
@@ -96,7 +118,7 @@ public class ObstacleManager {
 
         Random rand = new Random();
         int tablettesAmount = 2; // 0, 1 or 2
-        int tabletteProbability = rand.nextInt(30);
+        int tabletteProbability = rand.nextInt(31);
         if(tabletteProbability < 5){
             tablettesAmount = 0;
         }else if(tabletteProbability < 15){
@@ -110,7 +132,7 @@ public class ObstacleManager {
             case 0:
                 break;
             case 1:
-                tablettePos1 = rand.nextInt(2);
+                tablettePos1 = rand.nextInt(3);
                 break;
             case 2:
                 tablettePos1 = rand.nextInt(3);
@@ -145,10 +167,10 @@ public class ObstacleManager {
 
         Random rand = new Random();
 
-        if(rand.nextInt(100) <= 3 && player.getCurrentHelminthState() != 1){
+        if(rand.nextInt(100) <= 3 && !player.getImmortality()){
             return new Obstacle(pathX, obstacleY, "SHOE", obstacleSize);
         }
-        if(rand.nextInt(100) <= 3 && player.getCurrentHelminthState() != 2){
+        if(rand.nextInt(100) <= 3 && !player.getInShuba()){
             return new Obstacle(pathX, obstacleY, "SHUBA", obstacleSize);
         }
         if(rand.nextInt(100) <= 50){
@@ -198,6 +220,13 @@ public class ObstacleManager {
             backgroundRectangles[1].top = backgroundRectangles[0].top-2*Constants.SCREEN_HEIGHT;
             backgroundRectangles[1].bottom = backgroundRectangles[0].top;
         }
+
+        // bonus timers
+        bonusTimerShoe.update();
+        bonusTimerShuba.update();
+
+        goshaObj.update();
+        diablo.update();
     }
 
     public void draw(Canvas canvas){
@@ -211,8 +240,15 @@ public class ObstacleManager {
             ob.draw(canvas);
         }
         Paint paint = new Paint();
-        paint.setColor(Color.MAGENTA);
+        paint.setColor(Color.WHITE);
         paint.setTextSize(100);
         canvas.drawText("" + score, 50, 50 + paint.descent() - paint.ascent(), paint);
+
+        // bonus timers
+        bonusTimerShoe.draw(canvas);
+        bonusTimerShuba.draw(canvas);
+
+        goshaObj.draw(canvas);
+        diablo.draw(canvas);
     }
 }

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 
 public class GameplayScene implements Scene {
@@ -20,8 +21,6 @@ public class GameplayScene implements Scene {
     private long gameOverTime;
 
     private float touchStartX;
-
-    private Gosha goshaObj;
 
     public GameplayScene(){
         Constants.PLAYER_Y = (int)(5*Constants.SCREEN_HEIGHT/6);
@@ -55,17 +54,15 @@ public class GameplayScene implements Scene {
     }
 
     private void renewObstacleManager(){
-        goshaObj = new Gosha();
-        obstacleManager = new ObstacleManager(300, 200, player, goshaObj);
+        obstacleManager = new ObstacleManager(300, 200, player);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
+        //canvas.drawColor(Color.WHITE);
 
         obstacleManager.draw(canvas);
         player.draw(canvas);
-        goshaObj.draw(canvas);
 
         if(gameOver){
             Paint paint = new Paint();
@@ -95,7 +92,6 @@ public class GameplayScene implements Scene {
     public void update() {
         if(!gameOver){
             player.update(playerPoint);
-            goshaObj.update();
             obstacleManager.update();
 
             if(obstacleManager.playerCollide(player)){
