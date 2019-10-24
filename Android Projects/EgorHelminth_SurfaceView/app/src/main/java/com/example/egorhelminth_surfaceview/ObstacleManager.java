@@ -25,10 +25,13 @@ public class ObstacleManager {
     private Rect [] backgroundRectangles;
     private Bitmap backgroundBitmap;
 
-    public ObstacleManager(int obstacleGap, int obstacleSize, Helminth player){
+    private Gosha goshaObj;
+
+    public ObstacleManager(int obstacleGap, int obstacleSize, Helminth player, Gosha goshaObj){
         this.obstacleGap = obstacleGap;
         this.obstacleSize = obstacleSize;
         this.player = player;
+        this.goshaObj = goshaObj;
 
         startTime = initTime = System.currentTimeMillis();
 
@@ -58,12 +61,13 @@ public class ObstacleManager {
             }else if(collision == 1){ // meat
                 score++;
                 ob.setVisibility(false);
-            }else if(collision == 2){ // shoe
+            }else if(collision == 2){ // SHOE
                 player.setCurrentHelminthState(1);
                 ob.setVisibility(false);
-            }else if(collision == 3){ // shuba
+            }else if(collision == 3){ // SHUBA
                 player.setCurrentHelminthState(2);
                 ob.setVisibility(false);
+                this.goshaObj.setVisibity();
             }
         }
         return false;
@@ -136,16 +140,16 @@ public class ObstacleManager {
 
     private Obstacle getRandomObstacle(int pathX, int obstacleY, int obstacleSize, boolean isTablette){
         if(isTablette){
-            return new Obstacle(pathX, obstacleY, "tablette", obstacleSize);
+            return new Obstacle(pathX, obstacleY, "TABLETTE", obstacleSize);
         }
 
         Random rand = new Random();
 
         if(rand.nextInt(100) <= 3 && player.getCurrentHelminthState() != 1){
-            return new Obstacle(pathX, obstacleY, "shoe", obstacleSize);
+            return new Obstacle(pathX, obstacleY, "SHOE", obstacleSize);
         }
         if(rand.nextInt(100) <= 3 && player.getCurrentHelminthState() != 2){
-            return new Obstacle(pathX, obstacleY, "shuba", obstacleSize);
+            return new Obstacle(pathX, obstacleY, "SHUBA", obstacleSize);
         }
         if(rand.nextInt(100) <= 50){
             return new Obstacle(pathX, obstacleY, "meat", obstacleSize);

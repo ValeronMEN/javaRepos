@@ -16,10 +16,10 @@ public class Constants {
     public static int PLAYER_X_1;
     public static int PLAYER_X_2;
 
-    public static Bitmap shuba;
-    public static Bitmap shoe;
-    public static Bitmap meat1;
-    public static Bitmap meat2;
-    public static Bitmap meat3;
-    public static Bitmap tablette;
+    public static Bitmap SHUBA;
+    public static Bitmap SHOE;
+    public static Bitmap MEAT1;
+    public static Bitmap MEAT2;
+    public static Bitmap MEAT3;
+    public static Bitmap TABLETTE;
 }

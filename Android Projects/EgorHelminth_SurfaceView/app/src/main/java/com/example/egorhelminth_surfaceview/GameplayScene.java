@@ -21,6 +21,8 @@ public class GameplayScene implements Scene {
 
     private float touchStartX;
 
+    private Gosha goshaObj;
+
     public GameplayScene(){
         Constants.PLAYER_Y = (int)(5*Constants.SCREEN_HEIGHT/6);
         Constants.PLAYER_X_0 = Constants.SCREEN_WIDTH/5;
@@ -28,14 +30,14 @@ public class GameplayScene implements Scene {
         Constants.PLAYER_X_2 = 4*Constants.SCREEN_WIDTH/5;
 
         BitmapFactory bf = new BitmapFactory();
-        Constants.shuba = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shuba);
-        Constants.shoe = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shoe);
-        Constants.tablette = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.tablette);
-        Constants.meat1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat1);
-        Constants.meat2 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat2);
-        Constants.meat3 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat3);
+        Constants.SHUBA = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shuba);
+        Constants.SHOE = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.shoe);
+        Constants.TABLETTE = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.tablette);
+        Constants.MEAT1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat1);
+        Constants.MEAT2 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat2);
+        Constants.MEAT3 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat3);
 
-        player = new Helminth(new Rect(0, 0, 400, 450));
+        player = new Helminth(new Rect(0, 0, 150, 300));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, Constants.PLAYER_Y);
         player.update(playerPoint);
 
@@ -53,7 +55,8 @@ public class GameplayScene implements Scene {
     }
 
     private void renewObstacleManager(){
-        obstacleManager = new ObstacleManager(300, 200, player);
+        goshaObj = new Gosha();
+        obstacleManager = new ObstacleManager(300, 200, player, goshaObj);
     }
 
     @Override
@@ -62,6 +65,7 @@ public class GameplayScene implements Scene {
 
         obstacleManager.draw(canvas);
         player.draw(canvas);
+        goshaObj.draw(canvas);
 
         if(gameOver){
             Paint paint = new Paint();
@@ -91,6 +95,7 @@ public class GameplayScene implements Scene {
     public void update() {
         if(!gameOver){
             player.update(playerPoint);
+            goshaObj.update();
             obstacleManager.update();
 
             if(obstacleManager.playerCollide(player)){

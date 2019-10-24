@@ -1,7 +1,6 @@
 package com.example.egorhelminth_surfaceview;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -55,24 +54,24 @@ public class Obstacle implements GameObject {
     }
 
     private void setBitmap(){
-        if(obstacleType.equals("shuba")){
-            obstacleBitmap = Constants.shuba;
-        }else if(obstacleType.equals("shoe")){
-            obstacleBitmap = Constants.shoe;
-        }else if(obstacleType.equals("tablette")){
-            obstacleBitmap = Constants.tablette;
+        if(obstacleType.equals("SHUBA")){
+            obstacleBitmap = Constants.SHUBA;
+        }else if(obstacleType.equals("SHOE")){
+            obstacleBitmap = Constants.SHOE;
+        }else if(obstacleType.equals("TABLETTE")){
+            obstacleBitmap = Constants.TABLETTE;
         }else if(obstacleType.equals("meat")){
             Random rand = new Random();
             int meatType = rand.nextInt(2);
             switch(meatType){
                 case 0:
-                    obstacleBitmap = Constants.meat1;
+                    obstacleBitmap = Constants.MEAT1;
                     break;
                 case 1:
-                    obstacleBitmap = Constants.meat2;
+                    obstacleBitmap = Constants.MEAT2;
                     break;
                 case 2:
-                    obstacleBitmap = Constants.meat3;
+                    obstacleBitmap = Constants.MEAT3;
                     break;
                 default: System.out.println("Meat skin error"); break;
             }
@@ -80,17 +79,18 @@ public class Obstacle implements GameObject {
     }
 
     public int playerCollide(Helminth player){
-        if(isVisible && intersectRects(rectangle, player.getRectangle())){
+        if(isVisible && Rect.intersects(rectangle, player.getRectangle())){
             switch(obstacleType){
                 case "meat": return 1;
-                case "shoe": return 2;
-                case "shuba": return 3;
-                case "tablette": return -1;
+                case "SHOE": return 2;
+                case "SHUBA": return 3;
+                case "TABLETTE": return -1;
             }
         }
         return 0;
     }
 
+    /*
     //Rect.intersects(rectangle, player.getRectangle())
     private boolean intersectRects(Rect obstacleRect, Rect playerRect){
         if(playerRect.contains(obstacleRect.left, obstacleRect.top) ||
@@ -101,6 +101,8 @@ public class Obstacle implements GameObject {
         }
         return false;
     }
+
+     */
 
     @Override
     public void draw(Canvas canvas) {

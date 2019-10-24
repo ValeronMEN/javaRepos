@@ -44,21 +44,20 @@ public class Helminth implements GameObject {
         return currentHelminthState;
     }
 
-    // 0 - simple, 1 - shoe, 2 - shuba
+    // 0 - simple, 1 - SHOE, 2 - SHUBA
     public void setCurrentHelminthState(int state){
-        if(state < 0 || state > 2){
-            System.out.println("State error");
-            return;
+        if(state == 0 && currentHelminthState == 1){
+            this.rectangle.bottom -= 25;
+        }else if(state == 1 && currentHelminthState != 1){
+            this.rectangle.bottom += 25;
+        }else if(state == 2 && currentHelminthState == 1){
+            this.rectangle.bottom -= 25;
         }
         currentHelminthState = state;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        //Paint paint = new Paint();
-        //paint.setColor(color);
-        //canvas.drawRect(rectangle, paint);
-        //animManager.draw(canvas, rectangle);
         canvas.drawBitmap(helminthStates[currentHelminthState], null, rectangle, new Paint());
     }
 
