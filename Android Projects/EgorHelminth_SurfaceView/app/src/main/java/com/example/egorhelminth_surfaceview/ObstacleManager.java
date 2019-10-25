@@ -29,7 +29,11 @@ public class ObstacleManager {
     private Gosha goshaObj;
     private Diablo diablo;
 
-    private MediaPlayer mp;
+    private MediaPlayer mpHelminth;
+    private MediaPlayer mpIgor;
+    private MediaPlayer mpMeat;
+    private MediaPlayer mpDiablo;
+    private MediaPlayer mpBeat;
 
     private BonusTimer bonusTimerShuba;
     private BonusTimer bonusTimerShoe;
@@ -38,7 +42,12 @@ public class ObstacleManager {
         this.obstacleGap = obstacleGap;
         this.obstacleSize = obstacleSize;
         this.player = player;
-        this.mp = mediaPlayer;
+        this.mpHelminth = mediaPlayer;
+
+        mpDiablo = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.diablo);
+        mpMeat = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.meat);
+        mpIgor = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.igor);
+        mpBeat = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.beat);
 
         startTime = initTime = System.currentTimeMillis();
         obstacles = new ArrayList<Obstacle>();
@@ -76,28 +85,36 @@ public class ObstacleManager {
             }else if(collision == -1){
                 if(player.getImmortality()){
                     ob.setVisibility(false);
+                    mpBeat.seekTo(0);
+                    mpBeat.start();
                 }else{
                     return -1;
                 }
             }else if(collision == 1){ // meat
                 score++;
                 ob.setVisibility(false);
+                mpMeat.seekTo(0);
+                mpMeat.start();
             }else if(collision == 2){ // shoe
                 player.setCurrentHelminthState(1);
                 ob.setVisibility(false);
                 this.diablo.makeActive();
                 bonusTimerShoe.start();
+                mpDiablo.seekTo(0);
+                mpDiablo.start();
             }else if(collision == 3){ // shuba
                 player.setCurrentHelminthState(2);
                 ob.setVisibility(false);
                 this.goshaObj.makeActive();
-                mp.setLooping(false);
-                mp.seekTo(0);
-                mp.start();
+                mpHelminth.setLooping(false);
+                mpHelminth.seekTo(0);
+                mpHelminth.start();
                 bonusTimerShuba.start();
             }else if(collision == 4){ // breadhead
                 score+=5;
                 ob.setVisibility(false);
+                mpIgor.seekTo(0);
+                mpIgor.start();
             }
         }
         return 0;

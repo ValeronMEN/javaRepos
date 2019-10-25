@@ -22,7 +22,8 @@ public class GameplayScene implements Scene {
 
     private float touchStartX;
 
-    private MediaPlayer mp;
+    private MediaPlayer mpHelminth;
+    private MediaPlayer mpUliana;
 
     public GameplayScene(){
         Constants.PLAYER_Y = (int)(5*Constants.SCREEN_HEIGHT/6);
@@ -38,6 +39,8 @@ public class GameplayScene implements Scene {
         Constants.MEAT2 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat2);
         Constants.MEAT3 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat3);
         Constants.BREADHEAD = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.breadhead);
+
+        mpUliana = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.uliana);
 
         player = new Helminth(new Rect(0, 0, 150, 300));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, Constants.PLAYER_Y);
@@ -59,8 +62,8 @@ public class GameplayScene implements Scene {
     }
 
     private void renewObstacleManager(){
-        mp = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.bm_helminth);
-        obstacleManager = new ObstacleManager(300, 200, player, mp);
+        mpHelminth = MediaPlayer.create(Constants.CURRENT_CONTEXT, R.raw.bm_helminth);
+        obstacleManager = new ObstacleManager(300, 200, player, mpHelminth);
     }
 
     @Override
@@ -104,10 +107,11 @@ public class GameplayScene implements Scene {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
                 obstacleManager.killTimers();
+                mpUliana.start();
             }
         }
-        if(gameOver && mp.isPlaying()){
-            mp.stop();
+        if(gameOver && mpHelminth.isPlaying()){
+            mpHelminth.stop();
         }
     }
 
