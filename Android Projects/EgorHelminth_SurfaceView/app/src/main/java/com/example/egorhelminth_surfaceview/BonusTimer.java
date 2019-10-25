@@ -43,11 +43,20 @@ public class BonusTimer implements GameObject {
         }
     }
 
+    public void kill(){
+        this.isActive = false;
+    }
+
+    public boolean getIsActive(){
+        return isActive;
+    }
+
     @Override
     public void draw(Canvas canvas) {
         if(isActive){
             double deltaTime = (endTime - (System.currentTimeMillis() - startTime))/1000.0;
             int seconds = (int)Math.floor(deltaTime);
+
             String minutesStr = "00";
             int minutes = 0;
             if(seconds > 60){
@@ -59,17 +68,21 @@ public class BonusTimer implements GameObject {
                     minutesStr = "" + minutes;
                 }
             }
-            int centiseconds = (int)Math.round((deltaTime - seconds - minutes*60) * 100);
+
             String secondsStr;
             if (seconds < 10){
                 secondsStr = "0" + seconds;
             }else{
-                secondsStr = seconds + "";
+                secondsStr = "" + seconds;
             }
 
-            Paint paint = new Paint();
-            paint.setColor(color);
-            paint.setTextSize(65);
+            int centiseconds = (int)Math.round((deltaTime - seconds - minutes*60) * 100);
+            String centisecondsStr;
+            if(centiseconds < 10){
+                centisecondsStr = "0" + centiseconds;
+            }else{
+                centisecondsStr = "" + centiseconds;
+            }
 
             String message = "";
             if(this.timerType.equals("shuba")){
@@ -78,8 +91,12 @@ public class BonusTimer implements GameObject {
                 message = "Immortality";
             }
 
+            Paint paint = new Paint();
+            paint.setColor(color);
+            paint.setTextSize(65);
+
             canvas.drawText(message, xPos-70, yPos-70, paint);
-            canvas.drawText(minutesStr + ":" + secondsStr + ":" + centiseconds, xPos, yPos, paint); // + paint.descent() - paint.ascent()
+            canvas.drawText(minutesStr + ":" + secondsStr + ":" + centisecondsStr, xPos, yPos, paint); // + paint.descent() - paint.ascent()
         }
     }
 }

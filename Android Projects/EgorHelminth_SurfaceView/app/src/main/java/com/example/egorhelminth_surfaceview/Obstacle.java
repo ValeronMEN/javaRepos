@@ -54,12 +54,14 @@ public class Obstacle implements GameObject {
     }
 
     private void setBitmap(){
-        if(obstacleType.equals("SHUBA")){
+        if(obstacleType.equals("shuba")){
             obstacleBitmap = Constants.SHUBA;
-        }else if(obstacleType.equals("SHOE")){
+        }else if(obstacleType.equals("shoe")){
             obstacleBitmap = Constants.SHOE;
-        }else if(obstacleType.equals("TABLETTE")){
+        }else if(obstacleType.equals("tablette")){
             obstacleBitmap = Constants.TABLETTE;
+        }else if(obstacleType.equals("breadhead")){
+            obstacleBitmap = Constants.BREADHEAD;
         }else if(obstacleType.equals("meat")){
             Random rand = new Random();
             int meatType = rand.nextInt(2);
@@ -82,9 +84,10 @@ public class Obstacle implements GameObject {
         if(isVisible && Rect.intersects(rectangle, player.getRectangle())){
             switch(obstacleType){
                 case "meat": return 1;
-                case "SHOE": return 2;
-                case "SHUBA": return 3;
-                case "TABLETTE": return -1;
+                case "shoe": return 2;
+                case "shuba": return 3;
+                case "breadhead": return 4;
+                case "tablette": return -1;
             }
         }
         return 0;

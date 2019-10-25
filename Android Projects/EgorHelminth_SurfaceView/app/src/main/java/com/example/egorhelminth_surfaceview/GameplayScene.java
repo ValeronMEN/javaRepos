@@ -37,6 +37,7 @@ public class GameplayScene implements Scene {
         Constants.MEAT1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat1);
         Constants.MEAT2 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat2);
         Constants.MEAT3 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.meat3);
+        Constants.BREADHEAD = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.breadhead);
 
         player = new Helminth(new Rect(0, 0, 150, 300));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, Constants.PLAYER_Y);
@@ -99,13 +100,14 @@ public class GameplayScene implements Scene {
             player.update(playerPoint);
             obstacleManager.update();
 
-            if(obstacleManager.playerCollide(player)){
+            if(obstacleManager.playerCollide(player) == -1){
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
+                obstacleManager.killTimers();
             }
         }
-        if(gameOver){
-            mp.pause();
+        if(gameOver && mp.isPlaying()){
+            mp.stop();
         }
     }
 

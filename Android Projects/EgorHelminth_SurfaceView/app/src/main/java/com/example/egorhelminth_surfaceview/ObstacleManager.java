@@ -61,7 +61,14 @@ public class ObstacleManager {
         goshaObj = new Gosha();
     }
 
-    public boolean playerCollide(Helminth player){
+    public void killTimers(){
+        if(bonusTimerShuba.getIsActive())
+            bonusTimerShuba.kill();
+        if(bonusTimerShoe.getIsActive())
+            bonusTimerShoe.kill();
+    }
+
+    public int playerCollide(Helminth player){
         for(Obstacle ob : obstacles){
             int collision = ob.playerCollide(player);
             if(collision == 0){
@@ -70,19 +77,17 @@ public class ObstacleManager {
                 if(player.getImmortality()){
                     ob.setVisibility(false);
                 }else{
-                    if(mp.isPlaying())
-                        mp.stop();
-                    return true;
+                    return -1;
                 }
             }else if(collision == 1){ // meat
                 score++;
                 ob.setVisibility(false);
-            }else if(collision == 2){ // SHOE
+            }else if(collision == 2){ // shoe
                 player.setCurrentHelminthState(1);
                 ob.setVisibility(false);
                 this.diablo.makeActive();
                 bonusTimerShoe.start();
-            }else if(collision == 3){ // SHUBA
+            }else if(collision == 3){ // shuba
                 player.setCurrentHelminthState(2);
                 ob.setVisibility(false);
                 this.goshaObj.makeActive();
@@ -90,9 +95,12 @@ public class ObstacleManager {
                 mp.seekTo(0);
                 mp.start();
                 bonusTimerShuba.start();
+            }else if(collision == 4){ // breadhead
+                score+=5;
+                ob.setVisibility(false);
             }
         }
-        return false;
+        return 0;
     }
 
     private void populateObstacles(){
@@ -162,16 +170,19 @@ public class ObstacleManager {
 
     private Obstacle getRandomObstacle(int pathX, int obstacleY, int obstacleSize, boolean isTablette){
         if(isTablette){
-            return new Obstacle(pathX, obstacleY, "TABLETTE", obstacleSize);
+            return new Obstacle(pathX, obstacleY, "tablette", obstacleSize);
         }
 
         Random rand = new Random();
 
         if(rand.nextInt(1000) <= 20 && !player.getImmortality()){
-            return new Obstacle(pathX, obstacleY, "SHOE", obstacleSize);
+            return new Obstacle(pathX, obstacleY, "shoe", obstacleSize);
         }
         if(rand.nextInt(1000) <= 5 && !player.getInShuba()){
-            return new Obstacle(pathX, obstacleY, "SHUBA", obstacleSize);
+            return new Obstacle(pathX, obstacleY, "shuba", obstacleSize);
+        }
+        if(rand.nextInt(1000) <= 40){
+            return new Obstacle(pathX, obstacleY, "breadhead", obstacleSize);
         }
         if(rand.nextInt(1000) <= 500){
             return new Obstacle(pathX, obstacleY, "meat", obstacleSize);

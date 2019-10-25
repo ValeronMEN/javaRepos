@@ -22,4 +22,5 @@ public class Constants {
     public static Bitmap MEAT2;
     public static Bitmap MEAT3;
     public static Bitmap TABLETTE;
+    public static Bitmap BREADHEAD;
 }
