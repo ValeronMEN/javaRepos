@@ -1,0 +1,6 @@
+{
+   "parent": "item/generated",
+   "textures": {
+       "layer0": "bmbm:items/masters_thesis_snatched"
+   }
+}

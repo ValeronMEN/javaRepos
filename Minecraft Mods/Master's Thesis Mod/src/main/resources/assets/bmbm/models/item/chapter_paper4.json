@@ -1,0 +1,6 @@
+{
+   "parent": "item/generated",
+   "textures": {
+       "layer0": "bmbm:items/chapter_paper4"
+   }
+}
