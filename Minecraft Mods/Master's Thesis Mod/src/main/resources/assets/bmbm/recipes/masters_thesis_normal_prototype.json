@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#i#",
+        "iBi",
+        "#i#"
+    ],
+    "key": {
+        "#": {
+            "item": "bmbm:hardstone_ingot"
+        },
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "B": {
+            "item": "minecraft:book"
+        }
+    },
+    "result": {
+        "item": "bmbm:masters_thesis_normal_prototype",
+        "count": 1
+    }
+}

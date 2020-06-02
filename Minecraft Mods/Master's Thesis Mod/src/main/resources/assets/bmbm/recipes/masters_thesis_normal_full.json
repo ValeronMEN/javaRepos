@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#D#",
+        "DBD",
+        "#D#"
+    ],
+    "key": {
+        "#": {
+            "item": "bmbm:hardstone_ingot"
+        },
+        "D": {
+            "item": "minecraft:diamond"
+        },
+        "B": {
+            "item": "bmbm:masters_thesis_normal_to_fuck_off"
+        }
+    },
+    "result": {
+        "item": "bmbm:masters_thesis_normal_full",
+        "count": 1
+    }
+}

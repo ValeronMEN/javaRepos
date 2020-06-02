@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#P#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:water_bucket",
+            "data": 0
+        },
+        "P": {
+            "item": "minecraft:paper",
+            "data": 0
+        }
+    },
+    "result": {
+        "item": "bmbm:chapter_paper5",
+        "count": 1
+    }
+}

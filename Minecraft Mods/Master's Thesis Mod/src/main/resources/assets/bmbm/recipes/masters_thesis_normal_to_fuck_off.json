@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#g#",
+        "gBg",
+        "#g#"
+    ],
+    "key": {
+        "#": {
+            "item": "bmbm:hardstone_ingot"
+        },
+        "g": {
+            "item": "minecraft:gold_ingot"
+        },
+        "B": {
+            "item": "bmbm:masters_thesis_normal_prototype"
+        }
+    },
+    "result": {
+        "item": "bmbm:masters_thesis_normal_to_fuck_off",
+        "count": 1
+    }
+}

@@ -6,6 +6,8 @@ import java.util.List;
 import aul.behmedbabmod.items.ItemBase;
 import net.minecraft.item.Item;
 
+//where recipes can be formed:
+//https://crafting.thedestruc7i0n.ca/
 public class ModItems {
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 	

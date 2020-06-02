@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:bowl",
+            "data": 0
+        },
+        {
+            "item": "minecraft:water_bucket",
+            "data": 0
+        },
+        {
+            "item": "minecraft:wheat",
+            "data": 0
+        }
+    ],
+    "result": {
+        "item": "bmbm:noodles",
+        "count": 1
+    }
+}

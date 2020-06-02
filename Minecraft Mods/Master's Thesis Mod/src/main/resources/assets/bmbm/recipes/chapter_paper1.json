@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#",
+        "P"
+    ],
+    "key": {
+        "#": {
+            "item": "bmbm:dick"
+        },
+        "P": {
+            "item": "minecraft:paper"
+        }
+    },
+    "result": {
+        "item": "bmbm:chapter_paper1",
+        "count": 1
+    }
+}

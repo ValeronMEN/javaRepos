@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "bmbm:chapter_paper1"
+        },
+        {
+            "item": "bmbm:chapter_paper2"
+        },
+        {
+            "item": "bmbm:chapter_paper3"
+        },
+        {
+            "item": "bmbm:chapter_paper4"
+        },
+        {
+            "item": "bmbm:chapter_paper5"
+        }
+    ],
+    "result": {
+        "item": "bmbm:masters_thesis_shitty",
+        "count": 1
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#/#",
+        "/P/",
+        "#/#"
+    ],
+    "key": {
+        "#": {
+            "item": "bmbm:crap"
+        },
+        "/": {
+            "item": "minecraft:stick"
+        },
+        "P": {
+            "item": "minecraft:paper"
+        }
+    },
+    "result": {
+        "item": "bmbm:chapter_paper2",
+        "count": 1
+    }
+}
