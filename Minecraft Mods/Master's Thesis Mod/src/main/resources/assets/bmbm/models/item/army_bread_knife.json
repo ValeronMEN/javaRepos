@@ -1,0 +1,6 @@
+{
+   "parent": "item/handheld",
+   "textures": {
+       "layer0": "bmbm:items/army_bread_knife"
+   }
+}

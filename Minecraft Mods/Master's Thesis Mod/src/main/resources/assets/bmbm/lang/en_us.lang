@@ -3,6 +3,7 @@ item.crap.name=Crap
 item.dick.name=Dick
 item.noodles.name=Noodles
 item.hardstone_ingot.name=Hardstone Ingot
+item.calling_up_paper.name=Calling-Up Paper
 item.chapter_paper1.name=Chapter 1 of Shitty Master's Thesis
 item.chapter_paper2.name=Chapter 2 of Shitty Master's Thesis
 item.chapter_paper3.name=Chapter 3 of Shitty Master's Thesis
@@ -14,6 +15,13 @@ item.masters_thesis_normal_full.name=Master's Thesis
 item.masters_thesis_anothers.name=Another's Master's Thesis
 item.masters_thesis_shitty.name=Shitty Master's Thesis
 item.masters_thesis_snatched.name=Snatched Master's Thesis
+
+//Tools
+item.army_bread_knife.name=Army Bread Knife
+item.army_axe.name=Army Axe
+item.army_pickaxe.name=Army Pickaxe
+item.army_hoe.name=Army Hoe
+item.army_spade.name=Army Shovel
 
 //Blocks
 tile.hardstone_ore_block.name=Hardstone Ore
