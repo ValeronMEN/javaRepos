@@ -16,6 +16,10 @@ item.masters_thesis_anothers.name=Another's Master's Thesis
 item.masters_thesis_shitty.name=Shitty Master's Thesis
 item.masters_thesis_snatched.name=Snatched Master's Thesis
 
+// Items: Bottles
+item.bottle_empty.name=The Bottle Somebody Sat On
+item.bottle_of_beer.name=Bottle Of Beer
+
 //Tools
 item.army_bread_knife.name=Army Bread Knife
 item.army_axe.name=Army Axe
@@ -23,5 +27,14 @@ item.army_pickaxe.name=Army Pickaxe
 item.army_hoe.name=Army Hoe
 item.army_spade.name=Army Shovel
 
+//Armor
+item.army_helmet.name=Army Helmet
+item.army_chestplate.name=Army Chestplate
+item.army_leggings.name=Army Leggings
+item.army_boots.name=Army Boots
+
 //Blocks
 tile.hardstone_ore_block.name=Hardstone Ore
+
+//Creative Tabs
+itemGroup.masters_thesis_tab=Master's Thesis Mod

@@ -2,11 +2,12 @@ package aul.behmedbabmod.blocks;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 
 public class HardstoneOre extends BlockBase {
 
-	public HardstoneOre(String name, Material material) {
-		super(name, material);
+	public HardstoneOre(String name, Material material, CreativeTabs tab) {
+		super(name, material, tab);
 		
 		setSoundType(SoundType.STONE); // the sound you hear when you walk on it
 		setHardness(3.0F); // check the hardness table on Internet

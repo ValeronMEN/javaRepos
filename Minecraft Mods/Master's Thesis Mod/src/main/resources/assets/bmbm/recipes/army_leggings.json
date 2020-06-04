@@ -1,0 +1,43 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#E#",
+        "E E",
+        "# #"
+    ],
+    "key": {
+        "#": [
+            {
+            "item": "minecraft:leaves",
+            "data": 0
+            },
+            {
+            "item": "minecraft:leaves",
+            "data": 1
+            },
+            {
+            "item": "minecraft:leaves",
+            "data": 2
+            },
+            {
+            "item": "minecraft:leaves",
+            "data": 3
+            },
+            {
+            "item": "minecraft:leaves2",
+            "data": 0
+            },
+            {
+            "item": "minecraft:leaves2",
+            "data": 1
+            }
+        ],
+        "E": {
+            "item": "bmbm:crap"
+        }
+    },
+    "result": {
+        "item": "bmbm:army_leggings",
+        "count": 1
+    }
+}

@@ -2,7 +2,9 @@ package aul.behmedbabmod;
 
 import aul.behmedbabmod.init.ModRecipes;
 import aul.behmedbabmod.proxy.CommonProxy;
+import aul.behmedbabmod.tabs.MastersThesisTab;
 import aul.behmedbabmod.util.Reference;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -15,6 +17,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class Main {
 	@Instance
 	public static Main instance;
+	
+	public static final CreativeTabs MASTERS_THESIS_TAB = new MastersThesisTab("masters_thesis_tab");
 	
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.COMMON_PROXY_CLASS)
 	public static CommonProxy proxy;

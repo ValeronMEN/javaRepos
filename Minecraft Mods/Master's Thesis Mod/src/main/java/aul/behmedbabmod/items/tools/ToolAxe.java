@@ -9,11 +9,11 @@ import net.minecraft.item.ItemAxe;
 //private static final float[] ATTACK_DAMAGES = new float[] {6.0F, 8.0F, 8.0F, 8.0F, 6.0F};
 //private static final float[] ATTACK_SPEEDS = new float[] { -3.2F, -3.2F, -3.1F, -3.0F, -3.0F};
 public class ToolAxe extends ItemAxe implements IHasModel {
-	public ToolAxe(String name, ToolMaterial material) {
+	public ToolAxe(String name, ToolMaterial material, CreativeTabs tab) {
 		super(material, 6.0F, -3.2F);
 		setUnlocalizedName(name);
 		setRegistryName(name);
-		setCreativeTab(CreativeTabs.MATERIALS);
+		setCreativeTab(tab);
 		
 		ModItems.ITEMS.add(this);
 	}

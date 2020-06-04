@@ -1,0 +1,42 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "# #",
+        "G G"
+    ],
+    "key": {
+        "#": {
+            "item": "bmbm:crap"
+        },
+        "G": [
+            {
+            "item": "minecraft:leaves",
+            "data": 0
+            },
+            {
+            "item": "minecraft:leaves",
+            "data": 1
+            },
+            {
+            "item": "minecraft:leaves",
+            "data": 2
+            },
+            {
+            "item": "minecraft:leaves",
+            "data": 3
+            },
+            {
+            "item": "minecraft:leaves2",
+            "data": 0
+            },
+            {
+            "item": "minecraft:leaves2",
+            "data": 1
+            }
+        ]
+    },
+    "result": {
+        "item": "bmbm:army_boots",
+        "count": 1
+    }
+}
