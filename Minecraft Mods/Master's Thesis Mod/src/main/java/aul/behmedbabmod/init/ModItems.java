@@ -6,12 +6,15 @@ import java.util.List;
 import aul.behmedbabmod.Main;
 import aul.behmedbabmod.items.ItemBase;
 import aul.behmedbabmod.items.armor.ArmorBase;
+import aul.behmedbabmod.items.food.FoodBase;
+import aul.behmedbabmod.items.food.FoodEffectBase;
 import aul.behmedbabmod.items.tools.ToolAxe;
 import aul.behmedbabmod.items.tools.ToolHoe;
 import aul.behmedbabmod.items.tools.ToolPickaxe;
 import aul.behmedbabmod.items.tools.ToolSpade;
 import aul.behmedbabmod.items.tools.ToolSword;
 import aul.behmedbabmod.util.Reference;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -22,6 +25,7 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemSword;
+import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.common.util.EnumHelper;
 
 //where recipes can be formed:
@@ -32,7 +36,6 @@ public class ModItems {
 	// Items
 	public static final Item CRAP = new ItemBase("crap", Main.MASTERS_THESIS_TAB);
 	public static final Item DICK = new ItemBase("dick", Main.MASTERS_THESIS_TAB);
-	public static final Item NOODLES = new ItemBase("noodles", Main.MASTERS_THESIS_TAB);
 	public static final Item HARDSTONE_INGOT = new ItemBase("hardstone_ingot", Main.MASTERS_THESIS_TAB);
 	public static final Item CALLING_UP_PAPER = new ItemBase("calling_up_paper", Main.MASTERS_THESIS_TAB);
 	
@@ -74,4 +77,9 @@ public class ModItems {
 	public static final Item ARMY_CHESTPLATE = new ArmorBase("army_chestplate", ARMOR_MATERIAL_ARMY, 1, EntityEquipmentSlot.CHEST, Main.MASTERS_THESIS_TAB);
 	public static final Item ARMY_LEGGINGS = new ArmorBase("army_leggings", ARMOR_MATERIAL_ARMY, 2, EntityEquipmentSlot.LEGS, Main.MASTERS_THESIS_TAB);
 	public static final Item ARMY_BOOTS = new ArmorBase("army_boots", ARMOR_MATERIAL_ARMY, 1, EntityEquipmentSlot.FEET, Main.MASTERS_THESIS_TAB);
+
+	// Food
+	// 3 - an amount of the halves of a heart, 2.4f - saturation/effect duration
+	// PotionEffect: duration 60 * 20 means it lasts 1 minute
+	public static final Item NOODLES = new FoodEffectBase("noodles", 3, 2.4f, false, new PotionEffect(MobEffects.LUCK, 60*20, 1, false, true), Main.MASTERS_THESIS_TAB);
 }
