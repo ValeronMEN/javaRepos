@@ -18,3 +18,13 @@ The third one explores the structure of .bmp files and animation of primitives u
 The fourth one concerns construction of the simplest three-dimensional objects and their animation using the Java3D library.
 The fifth one is about importing of three-dimensional models into the Java3D programming environment, processing and manipulation of these images.
 The last one relates to animation of three-dimensional objects using Java3D.
+The detailed information for the every work can be found inside the corresponding folder in Ukrainian.
+
+The folder called "Data Structures and Algorithms" relates to the corresponding subject. There are three laboratory works and one practical work.
+The second laboratory work concerns exploring of elementary sorting algorithms - Shaker sort (first part) and Bucket sort (second part).
+The third laboratory work is related to studying of data structure "hash table", hashing methods and ways to resolve collisions.
+The fourth laboratory work describes exploring of nonlinear structures and acquisition of practical skills in creating and processing search binary trees.
+The practical work consists of 3 exercises: Selection sort in the one-way list, Quick sort and Median of three elements sort, deleting an element in the binary tree vs in an unordered array.
+The detailed information for the every work can be found inside the corresponding folder in Ukrainian.
+
+The folder called "Minecraft Mods" concerns Minecraft mods I've created. There is one test modification called "Master's Thesis Mod".
